@@ -34,6 +34,78 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Real Chromium navigation acceptance
         run: python -m unittest discover -s tests -p test_navigation_browser.py -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install saved comparison browser dependencies
+        run: |
+          python -m pip install -r requirements-ml.txt
+          npm install --no-save --prefix .local/browser-tests playwright
+          .local/browser-tests/node_modules/.bin/playwright install --with-deps chromium
+      - name: Real saved comparison and review acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_comparison_review.cjs
+      - name: Responsive workspace and keyboard interaction acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_workspace.cjs
+      - name: Authenticated maintenance planning acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_maintenance.cjs
+      - name: Saved synthetic incident lifecycle acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_incidents.cjs
+      - name: Scoped incident ownership and handoff acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_assignments.cjs
+      - name: Synthetic follow-up date checks
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_followups.cjs
+      - name: Synthetic incident investigation log acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_investigation.cjs
+      - name: Saved observation to incident acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_observation_incidents.cjs
+      - name: Incident observation attachment acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_observation_attachments.cjs
+      - name: Incident severity review and scoped queue acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_triage.cjs
+      - name: Incident workbench navigation and history acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_incident_workbench.cjs
+      - name: Captured observation comparison acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_capture_comparison.cjs
+      - name: Unsaved incident draft protection acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_incident_drafts.cjs
+      - name: Scoped incident overview and guarded quick views
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_incident_queue_summary.cjs
+      - name: Saved case handover download and print acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_incident_handover.cjs
+      - name: Non-destructive saved case change checks
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_incident_saved_check.cjs
+      - name: Frozen incident context in maintenance planning
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_planning_source_context.cjs
+      - name: Maintenance planning and exercise draft protection
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_planning_drafts.cjs
+      - name: Maintenance workbench navigation and history filters
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_planning_workbench.cjs
+      - name: Read-only saved planning revision comparison
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_planning_comparison.cjs
+      - name: Read-only saved queue timing
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_delivery_timing.cjs
+      - name: Read-only retained queue capacity
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_delivery_capacity.cjs
+      - name: Queue-state filters and count-card shortcuts
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_delivery_filters.cjs
+      - name: Paged retained delivery history
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_delivery_history.cjs
+      - name: Read-only saved delivery outcome inspection
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_delivery_inspector.cjs
+      - name: Explicit binding target and observation editor protection
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_registry_examples.cjs
+      - name: Read-only persisted observation inspection
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_observation_inspector.cjs
+      - name: Read-only same-page observation comparison
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_observation_comparison.cjs
+      - name: Approved-plan maintenance documentation exercise acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_exercises.cjs
+      - name: Local administrator team management acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_team.cjs
+      - name: Explicit local password rotation acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_passwords.cjs
+      - name: Complete production readiness register acceptance
+        run: NODE_PATH="$PWD/.local/browser-tests/node_modules" node tests/browser_readiness.cjs
       - name: Upload desktop and mobile review screenshots
         if: always()
         uses: actions/upload-artifact@v4

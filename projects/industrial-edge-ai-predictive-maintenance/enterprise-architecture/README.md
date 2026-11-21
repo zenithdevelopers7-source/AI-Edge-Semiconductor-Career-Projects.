@@ -1,5 +1,7 @@
 # EDGEOPS — Enterprise Architecture Baseline
 
+> **Current consolidation — 19 November 2026:** Read the [complete production design baseline](../production-design/README.md), [hardware integration map](../production-design/02-HARDWARE-INTEGRATION.md), and [source/evidence reconciliation](../production-design/05-SOURCE-REVIEW.md) first. Historical “not executed” statements below may predate the recorded evidence; the consolidated register preserves each result's exact scope. This is a design proposal, not production or physical approval. EA-32 remains available for the durable-spool implementation previously proposed by EA-31.
+
 **Architecture version:** 0.1 (proposed, unapproved)  
 **Date:** 2026-11-17  
 **Scope:** Guarded laboratory motor test rig, embedded telemetry, edge AI, enterprise maintenance workflow  

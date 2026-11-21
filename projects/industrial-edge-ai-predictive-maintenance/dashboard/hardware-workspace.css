@@ -1,0 +1,47 @@
+.hardware-intro{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);border:1px solid #3a5065;background:linear-gradient(120deg,#1b343d,#172539);border-radius:12px;overflow:hidden;margin:0 0 24px}
+.hardware-intro-copy{padding:30px 32px}
+.hardware-intro h2{font-size:34px;line-height:1.16;letter-spacing:-.9px;font-weight:600;margin:15px 0;color:#f0f6fd}
+.hardware-intro p{font-size:14px;line-height:1.8;color:#b4c9db;max-width:440px;margin:0 0 20px}
+.hardware-intro-note{font-size:12px;color:#a6dfd4;border-top:1px solid #3e6265;padding-top:14px;display:block;max-width:440px;line-height:1.6}
+.hardware-intro figure{position:relative;margin:0;min-height:260px;background:#142633}
+.hardware-intro img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% center}
+.hardware-intro figcaption{position:absolute;bottom:12px;right:12px;background:#0b1a25c9;color:#d6e5ed;padding:5px 9px;border-radius:4px;font-size:10px}
+.hardware-toolbar{padding:20px 23px;border-top:1px solid #2e4359;border-bottom:1px solid #2e4359;background:#142234}
+.hardware-filter-fields{display:flex;align-items:end;gap:15px;flex-wrap:wrap}
+.hardware-filter-fields label{font-size:13px;color:#adc3d7;display:block}
+.hardware-filter-fields label:first-child{flex:1;min-width:200px}
+.hardware-filter-fields label:nth-child(2){width:210px}
+.hardware-filter-fields input,.hardware-filter-fields select{display:block;width:100%;padding:11px 13px;border:1px solid #456078;background:#101c2c;color:#e0edf8;border-radius:6px;font-size:14px;margin-top:8px;min-height:44px}
+.hardware-filter-fields>button{min-height:44px}
+.hardware-quick-filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.hardware-quick-filters button{display:flex;align-items:center;gap:10px;border:1px solid #364d66;background:#192a3d;color:#adbed2;border-radius:6px;font-size:12px;min-height:36px;padding:7px 11px}
+.hardware-quick-filters button[aria-pressed=true]{color:#b8efdf;background:#214139;border-color:#69a994}
+.hardware-quick-filters button>span{font-size:11px;min-width:18px;text-align:center;background:#0c192775;border-radius:4px;padding:1px 4px;color:inherit}
+.hardware-result-tools{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.hardware-result-tools>span{font-size:12px;color:#a2bcd1;line-height:1.6}
+.hardware-toolbar button:disabled,.hardware-toolbar input:disabled,.hardware-toolbar select:disabled{opacity:.45;cursor:default}
+.bom-reference{font-family:ui-monospace,'Cascadia Code',Consolas,monospace;font-size:12px;letter-spacing:.2px;color:#b2c9dd;white-space:nowrap}
+.dashboard-page .hardware-detail-link{font-size:14px;line-height:1.6;text-align:left;color:#b8e4dd}
+.hardware-detail-link:hover{text-decoration:underline;text-underline-offset:4px}
+.hardware-category-label{display:inline-block;font-size:12px;color:#a8c0d5;background:#1d3045;border:1px solid #364c65;padding:3px 7px;border-radius:4px;line-height:1.5}
+.hardware-lifecycle{display:inline-block;font-size:12px;color:#e5c590;line-height:1.6;white-space:nowrap}
+#hardware-table td{vertical-align:middle;padding-top:18px;padding-bottom:18px}
+#hardware-table td:first-child{width:110px}
+#hardware-table td:nth-child(2){min-width:210px}
+.hardware-detail-heading{display:flex;gap:15px;align-items:center;margin:0 0 18px}
+.hardware-detail-purpose{font-size:16px!important;color:#c0d7e4!important;line-height:1.8}
+.component-gates{padding-left:22px;margin:18px 0 25px;color:#93c6bb;font-size:13px}
+.component-gates li{padding:8px 0 12px 5px;border-bottom:1px solid #30455b}
+.component-gates strong{display:block;font-size:14px;color:#cfdeed}
+.component-gates span{display:block;font-size:13px;color:#a4bbd1;line-height:1.7;margin-top:5px}
+.asset-sensor-plan{border:1px solid #3b5468;border-radius:8px;background:#16293a;margin:22px 0;overflow:hidden}
+.asset-sensor-plan summary{font-size:14px;padding:16px 18px;color:#b5e6dc;cursor:pointer;line-height:1.6}
+.asset-sensor-plan>div{padding:0 18px 6px}
+.asset-sensor-plan p{font-size:13px;line-height:1.8;color:#aec3d6}
+.sensor-plan-list{display:grid;gap:8px;margin:17px 0}
+.sensor-plan-list button{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #3a526c;border-radius:6px;background:#1c3044;padding:13px;text-align:left;color:#d4e8ef;width:100%}
+.sensor-plan-list button:hover{border-color:#83c9b9;background:#224338}
+.sensor-plan-list strong{font-size:14px;display:block}
+.sensor-plan-list small{font-size:12px;color:#a2bbcf;display:block;margin-top:5px;line-height:1.6}
+@media(max-width:1000px){.hardware-intro-copy{padding:24px}.hardware-intro h2{font-size:30px}.hardware-filter-fields label:nth-child(2){width:180px}}
+@media(max-width:650px){.hardware-intro{grid-template-columns:minmax(0,1fr)}.hardware-intro figure{min-height:210px;order:-1}.hardware-intro-copy{padding:24px}.hardware-intro h2{font-size:28px}.hardware-intro p{font-size:14px}.hardware-toolbar{padding:18px}.hardware-filter-fields{gap:13px}.hardware-filter-fields label:first-child,.hardware-filter-fields label:nth-child(2){min-width:0;width:100%;flex:1 1 100%}.hardware-result-tools{flex-wrap:wrap}.hardware-result-tools button{font-size:12px}.hardware-quick-filters{gap:7px}.hardware-quick-filters button{font-size:11px;padding:7px 9px}.hardware-lifecycle{font-size:11px}.sensor-plan-list button{align-items:flex-start;flex-wrap:wrap}.hardware-detail-heading{flex-wrap:wrap}}

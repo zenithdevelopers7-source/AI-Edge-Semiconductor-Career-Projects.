@@ -1,0 +1,566 @@
+{
+  "schema_version": 1,
+  "title": "EDGEOPS production readiness",
+  "items": [
+    {
+      "id": "REQ-01",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Approved scope and architecture",
+      "description": "Define supported equipment, users, sites, operating conditions, features, system boundaries and responsible owners. Resolve conflicting active specifications.",
+      "evidence_required": "Approved requirements, architecture decisions, measurable acceptance criteria and an owner for every requirement.",
+      "current_boundary": "Design baseline exists; deployment scope and acceptance are unapproved.",
+      "page": "architecture"
+    },
+    {
+      "id": "REQ-02",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Verified physical hardware",
+      "description": "Reconcile all 30 hardware categories with actual purchased parts, exact models, ratings, wiring, mounting, protection and installation records. Record conditional components, instruments and spares separately.",
+      "evidence_required": "Verified inventory, final diagrams, photographs, inspection records and qualified physical-safety acceptance.",
+      "current_boundary": "The 30-category catalog is a plan; receipt, installation and commissioning are unverified.",
+      "page": "hardware"
+    },
+    {
+      "id": "REQ-03",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Reliable sensor acquisition",
+      "description": "Acquire real acceleration, temperature, current and voltage measurements. Verify calibration, units, sampling rate, timing, sensor faults, clipping and missing readings.",
+      "evidence_required": "Repeatable real capture logs and calibration/quality results. Invalid readings remain unavailable rather than becoming misleading zeros.",
+      "current_boundary": "Firmware/reference source exists; dashboard measurements remain synthetic.",
+      "page": "telemetry"
+    },
+    {
+      "id": "REQ-04",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Device and asset identity",
+      "description": "Register every device, sensor, gateway and monitored asset. Track firmware, configuration, boot identity, replacement history and approved assignments.",
+      "evidence_required": "Enrollment and replacement tests proving that observations belong to the correct physical equipment.",
+      "current_boundary": "Device and asset commissioning is not established.",
+      "page": "devices"
+    },
+    {
+      "id": "REQ-05",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Durable edge-to-server delivery",
+      "description": "Implement persistent buffering, automatic retries, duplicate handling, content-conflict detection, bounded storage and recovery. Distinguish broker acceptance, edge persistence and central commit.",
+      "evidence_required": "Crash, restart, connection-loss, lost-response, disk-full, overflow, replay and reconciliation results.",
+      "current_boundary": "Scoped laboratory evidence does not establish the complete durable live path.",
+      "page": "devices"
+    },
+    {
+      "id": "REQ-06",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Production backend and storage",
+      "description": "Connect authoritative APIs to durable operational records. Implement validated contracts, migrations, transactions, indexing, retention and controlled file/model storage. Preserve existing records during migration.",
+      "evidence_required": "API and concurrency tests, migration reconciliation, capacity measurements and rollback evidence.",
+      "current_boundary": "Local SQLite services work for reports and synthetic planning; central operational storage is unfinished.",
+      "page": "architecture"
+    },
+    {
+      "id": "REQ-07",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Production identity and security",
+      "description": "Implement account provisioning, least privilege, privileged-account protection, session revocation, device credentials, encrypted transport, secret management and credential rotation.",
+      "evidence_required": "Unauthorized and cross-asset/site tests, expired/revoked credential tests, role-change tests and reviewed security findings.",
+      "current_boundary": "Local sessions/CSRF and scoped tests work; enterprise identity and production security acceptance remain open.",
+      "page": "security"
+    },
+    {
+      "id": "REQ-08",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Fully connected dashboard",
+      "description": "Connect fleet, assets, telemetry, devices, incidents, maintenance, models, reports and audit to authoritative services. Distinguish measured, simulated, replayed, stale, partial and unavailable data.",
+      "evidence_required": "Real-user task completion, permission checks, accessible controls/text, responsive browser tests and correct exports.",
+      "current_boundary": "The UI works with several real local APIs; equipment and several operational services remain simulated or unconnected.",
+      "page": "overview"
+    },
+    {
+      "id": "REQ-09",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Operational incident management",
+      "description": "Implement creation, correlation, deduplication, assignment, acknowledgment, investigation, suppression with expiry, escalation, resolution, reopening and closure.",
+      "evidence_required": "Real observation-to-incident traces; duplicate and out-of-order inputs do not repeat operational effects.",
+      "current_boundary": "Current incident examples are browser demonstrations.",
+      "page": "alerts"
+    },
+    {
+      "id": "REQ-10",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Complete maintenance workflow",
+      "description": "Extend local planning to approved operational requests, technician assignment, execution evidence, independent verification and closure. Bind decisions to exact revisions and separate responsibilities.",
+      "evidence_required": "A complete real case through verified closure; self, stale, concurrent and revoked approvals are correctly denied.",
+      "current_boundary": "Persistent synthetic planning and independent-account review work; field execution is unavailable.",
+      "page": "maintenance"
+    },
+    {
+      "id": "REQ-11",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Validated predictive models",
+      "description": "Obtain representative real operating data and credible labels. Prevent leakage, compare against a baseline, agree performance thresholds and document unsupported conditions.",
+      "evidence_required": "Independent real-recording evaluation, precision/recall, false-alarm results, uncertainty and reviewed model cards. Synthetic scores alone are insufficient.",
+      "current_boundary": "Current comparisons use synthetic labels and are not field-performance evidence.",
+      "page": "models"
+    },
+    {
+      "id": "REQ-12",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Controlled edge model deployment",
+      "description": "Version features and model artifacts. Verify compatibility, runtime parity, resource use, inference timing, staged promotion, monitoring and rollback.",
+      "evidence_required": "Measured gateway results, approved release records and incompatible/corrupt-model plus rollback tests.",
+      "current_boundary": "No production model is active. Offline report approval cannot deploy a model.",
+      "page": "models"
+    },
+    {
+      "id": "REQ-13",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Grounded AI assistance",
+      "description": "For every promised AI capability, connect approved knowledge revisions with access restrictions, citations, uncertainty, abstention and human-reviewed proposals.",
+      "evidence_required": "Retrieval/access, unsupported-answer and injection tests; generated advice cannot grant permissions or bypass approval.",
+      "current_boundary": "The knowledge catalog is a design reference; retrieval/generation is unconnected.",
+      "page": "knowledge"
+    },
+    {
+      "id": "REQ-14",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Reproducible deployment",
+      "description": "Establish controlled environments, pinned dependencies, release artifacts, configuration management, automated checks, secure deployment and migration procedures.",
+      "evidence_required": "Repeatable clean installation, upgrades, failed-upgrade handling and successful rollback.",
+      "current_boundary": "Passing GitHub workflows verify scoped software behavior, not production deployment.",
+      "page": "governance"
+    },
+    {
+      "id": "REQ-15",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Monitoring and operational support",
+      "description": "Monitor service health, sensor freshness, delivery lag, queues, resources, storage growth, model behavior and notification delivery. Assign support/escalation owners.",
+      "evidence_required": "Agreed targets met under realistic load and a supervised soak, with actionable alerts and response procedures.",
+      "current_boundary": "Local API checks are not a complete production monitoring or support system.",
+      "page": "devices"
+    },
+    {
+      "id": "REQ-16",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Backup and disaster recovery",
+      "description": "Back up operational data, identity configuration, knowledge revisions, models and required configuration. Define acceptable data loss and restoration time.",
+      "evidence_required": "A clean restoration reconciles accounts, permissions, records, artifact references and pending deliveries within agreed targets.",
+      "current_boundary": "Local protective backups exist; full disaster-recovery acceptance is outstanding.",
+      "page": "governance"
+    },
+    {
+      "id": "REQ-17",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Data and knowledge governance",
+      "description": "Establish ownership, permitted use, retention, exports, access restrictions and rights to datasets and operating documents.",
+      "evidence_required": "Approved policies and tested enforcement appropriate to the deployment.",
+      "current_boundary": "Policies and document rights require deployment-specific approval.",
+      "page": "knowledge"
+    },
+    {
+      "id": "REQ-18",
+      "kind": "requirement",
+      "group": "Production requirements",
+      "title": "Final release acceptance",
+      "description": "Close blocking defects, document limitations, train operators, assign ongoing maintenance and accept an exact release within a defined deployment scope.",
+      "evidence_required": "Dated acceptance from responsible engineering, physical-safety, security and operations reviewers.",
+      "current_boundary": "No final production acceptance or physical sign-off is established.",
+      "page": "governance"
+    },
+    {
+      "id": "DEMO-01",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Real measurement journey",
+      "description": "Trace sensor → acquisition device → edge gateway → central storage → dashboard with identity, units, timestamps and quality.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "telemetry"
+    },
+    {
+      "id": "DEMO-02",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Network/backend outage",
+      "description": "Demonstrate bounded local collection, visibly stale central data, automatic recovery and reconciled buffered records.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "devices"
+    },
+    {
+      "id": "DEMO-03",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Device or gateway restart",
+      "description": "Show a known recoverable outcome for previously acknowledged data across power/process interruption.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "devices"
+    },
+    {
+      "id": "DEMO-04",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Duplicates and conflicting messages",
+      "description": "Identical retries are idempotent; changed content under the same identity is rejected or quarantined without overwriting the original.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "architecture"
+    },
+    {
+      "id": "DEMO-05",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Sensor and timing faults",
+      "description": "Missing, invalid, clipped, stale and ambiguous observations produce correct quality states, including clock/boot ambiguity.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "telemetry"
+    },
+    {
+      "id": "DEMO-06",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Resource exhaustion",
+      "description": "Full disks, queue overflow and corrupt storage produce explicit failures and documented recovery.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "devices"
+    },
+    {
+      "id": "DEMO-07",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Unauthorized access",
+      "description": "Incorrect, expired, revoked or wrongly scoped identities cannot ingest, read, approve or release protected resources.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "security"
+    },
+    {
+      "id": "DEMO-08",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Independent decisions",
+      "description": "Self-approval, stale approvals, revoked rights and competing decisions have correct atomic outcomes.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "maintenance"
+    },
+    {
+      "id": "DEMO-09",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Model failure and rollback",
+      "description": "Incompatible or corrupt models cannot silently activate; accepted fallback and rollback work.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "models"
+    },
+    {
+      "id": "DEMO-10",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "AI failure",
+      "description": "Unavailable retrieval, malicious source content or insufficient evidence produces a bounded response or abstention.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "insights"
+    },
+    {
+      "id": "DEMO-11",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Hardware replacement",
+      "description": "Identity, calibration, assignments, revoked credentials and history remain correct after replacement.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "hardware"
+    },
+    {
+      "id": "DEMO-12",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Recovery",
+      "description": "Failed deployment, migration and database loss can be recovered within agreed recovery targets.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "governance"
+    },
+    {
+      "id": "DEMO-13",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Capacity",
+      "description": "Realistic input rates, viewer counts, long-running operation and slow clients meet accepted limits.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "simulation"
+    },
+    {
+      "id": "DEMO-14",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Full maintenance case",
+      "description": "Observation → incident → proposal → independent approval → technician evidence → independent verification → closure → audit trail.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "maintenance"
+    },
+    {
+      "id": "DEMO-15",
+      "kind": "demonstration",
+      "group": "End-to-end demonstrations",
+      "title": "Provenance isolation",
+      "description": "Synthetic and replayed data cannot impersonate measured equipment data or authorize real operational work.",
+      "evidence_required": "Dated real-deployment test procedure, conditions, observed results, logs/traces, exceptions and responsible reviewer.",
+      "current_boundary": "A scoped software test or synthetic fixture does not automatically pass this deployed-system demonstration.",
+      "page": "reports"
+    },
+    {
+      "id": "TARGET-01",
+      "kind": "target",
+      "group": "Measurement",
+      "title": "Sampling rate",
+      "unit": "samples/s",
+      "description": "Agree the rate for each sensor/channel and acquisition mode.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-02",
+      "kind": "target",
+      "group": "Measurement",
+      "title": "Timing accuracy",
+      "unit": "time error / jitter",
+      "description": "Define timestamp accuracy, jitter and clock/boot handling.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-03",
+      "kind": "target",
+      "group": "Measurement",
+      "title": "Measurement quality",
+      "unit": "error / validity limits",
+      "description": "Specify calibration tolerances, clipping and validity criteria.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-04",
+      "kind": "target",
+      "group": "Delivery",
+      "title": "Collection capacity",
+      "unit": "events/s / bytes/s",
+      "description": "Define sustained and peak acquisition/ingestion capacity.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-05",
+      "kind": "target",
+      "group": "Delivery",
+      "title": "Outage buffering",
+      "unit": "duration / storage",
+      "description": "Specify the outage duration and bounded spool/storage budget.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-06",
+      "kind": "target",
+      "group": "Delivery",
+      "title": "Allowable data loss",
+      "unit": "records / fraction",
+      "description": "Define loss tolerance and reconciliation across each acknowledgment boundary.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-07",
+      "kind": "target",
+      "group": "Detection",
+      "title": "Detection latency",
+      "unit": "duration",
+      "description": "Set maximum accepted observation-to-detection delay under stated load.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-08",
+      "kind": "target",
+      "group": "Detection",
+      "title": "Alert latency",
+      "unit": "duration",
+      "description": "Set detection-to-delivery/acknowledgment targets and escalation conditions.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-09",
+      "kind": "target",
+      "group": "Models",
+      "title": "Model performance",
+      "unit": "metric thresholds",
+      "description": "Agree precision, recall and other relevant thresholds on independent real data, with uncertainty.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-10",
+      "kind": "target",
+      "group": "Models",
+      "title": "False-alarm frequency",
+      "unit": "alarms / asset-time",
+      "description": "Define acceptable false alarms for actual operating conditions.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-11",
+      "kind": "target",
+      "group": "Recovery",
+      "title": "Availability",
+      "unit": "percentage / window",
+      "description": "Agree service availability and the measurement window.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-12",
+      "kind": "target",
+      "group": "Recovery",
+      "title": "Recovery time (RTO)",
+      "unit": "duration",
+      "description": "Define and test the restoration-time objective.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-13",
+      "kind": "target",
+      "group": "Recovery",
+      "title": "Recovery point (RPO)",
+      "unit": "duration / records",
+      "description": "Define acceptable committed-data loss at restoration.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-14",
+      "kind": "target",
+      "group": "Scale",
+      "title": "Supported devices",
+      "unit": "count",
+      "description": "Specify enrolled device count and transport mix.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-15",
+      "kind": "target",
+      "group": "Scale",
+      "title": "Supported assets",
+      "unit": "count",
+      "description": "Specify monitored physical assets and simultaneous streams.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-16",
+      "kind": "target",
+      "group": "Scale",
+      "title": "Supported sites",
+      "unit": "count",
+      "description": "Specify supported sites and isolation boundaries.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-17",
+      "kind": "target",
+      "group": "Scale",
+      "title": "Concurrent users",
+      "unit": "count",
+      "description": "Specify concurrent viewers/operators and query workload.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-18",
+      "kind": "target",
+      "group": "Data & resources",
+      "title": "Data retention",
+      "unit": "duration",
+      "description": "Specify retention for telemetry, decisions, audit, models and knowledge.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-19",
+      "kind": "target",
+      "group": "Data & resources",
+      "title": "Storage growth",
+      "unit": "bytes / duration",
+      "description": "Measure growth and define capacity and alert thresholds.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    },
+    {
+      "id": "TARGET-20",
+      "kind": "target",
+      "group": "Data & resources",
+      "title": "Operating resource budgets",
+      "unit": "CPU / memory / power / cost",
+      "description": "Agree and measure gateway/server resource and operating budgets.",
+      "evidence_required": "An agreed measurable value, operating conditions, accountable owner and test evidence showing the target is met.",
+      "current_boundary": "No deployment target is inferred or invented from demonstration values.",
+      "page": "governance"
+    }
+  ],
+  "hardware_rule": "Account for all 30 hardware categories. Install conditional parts only where the reviewed design requires them; instruments and spares retain commissioning or replacement roles.",
+  "completion_rule": "Production acceptance requires a real deployed scope, satisfied mandatory requirements, failure/recovery evidence, no blocking defects and dated qualified review. Recorded reviews in this local register are not physical commissioning or automatic production authorization.",
+  "priorities": [
+    "Verified hardware and identity mappings",
+    "Approved data contracts",
+    "Durable ingestion and reconciliation",
+    "Connected operational workflows",
+    "Validated deployed models and grounded advice",
+    "Recovery, security and release acceptance"
+  ]
+}

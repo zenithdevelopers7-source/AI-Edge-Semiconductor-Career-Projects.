@@ -16,10 +16,22 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from typing import Literal
 
+from request_limits import RequestBodyLimit, SECURITY_HEADERS
+import physical_build
+import incidents
+import observation_queries
+import delivery_service
+import acquisition_registry
+import operations
 import telemetry_store
+import maintenance_requests
+import maintenance_exercises
+import team_accounts
+import production_readiness
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from pydantic import BaseModel, Field
 
@@ -35,7 +47,14 @@ BOOTSTRAP_PASSWORD = os.environ.get("EDGEOPS_ADMIN_PASSWORD", "")
 MAX_BODY_BYTES = 8192
 
 app = FastAPI(title="EDGEOPS Industrial Console", docs_url=None, redoc_url=None, openapi_url=None)
-PUBLIC_ASSETS = {"styles.css", "app.js", "dashboard-auth.js", "architecture.js", "signin.css", "signin.js", "industrial-motor.svg", "industrial-plant.svg", "edgeops-motor-photo.jpg", "edgeops-factory-backdrop.jpg"}
+PUBLIC_ASSETS = {"persisted-observation-comparison.js", "persisted-observation-inspector.js", "planning-revision-comparison.js", "planning-workbench-ui.js", "planning-draft-guard.js", "planning-source-context.js", "incident-saved-check.js", "incident-handover-ui.js", "incident-draft-guard.js", "incident-capture-comparison.js", "incident-workbench-ui.js", "incident-triage-ui.js", "incident-observations-ui.js", "styles.css", "app.js", "dashboard-auth.js", "comparison-ui.js", "workspace.js", "workspace.css", "production.js", "production.css", "visual.css", "hardware-workspace.js", "hardware-workspace.css", "maintenance-ui.js", "maintenance-ui.css", "theme.css", "readiness-ui.js", "readiness-ui.css", "experience.js", "experience.css", "operations-ui.js", "operations-ui.css", "registry-ui.js", "delivery-ui.js", "persisted-telemetry.js", "physical-build-ui.js", "team-ui.js", "maintenance-exercises-ui.js", "incidents-ui.js", "incidents-ui.css", "edgeops-bench-concept.webp", "edgeops-facility-concept.webp", "architecture.js", "signin.css", "signin.js", "industrial-motor.svg", "industrial-plant.svg", "edgeops-motor-photo.jpg", "edgeops-factory-backdrop.jpg"}
+
+@app.exception_handler(RequestValidationError)
+async def validation_failure(request: Request, error: RequestValidationError):
+    # Do not echo raw credentials/payloads or non-JSON NaN values in error responses.
+    errors = [{key: item[key] for key in ("loc", "msg", "type")} for item in error.errors()]
+    return JSONResponse({"detail": errors}, status_code=422, headers=SECURITY_HEADERS)
+
 
 @app.get("/static/{asset}")
 def public_asset(asset: str):
@@ -46,26 +65,8 @@ def public_asset(asset: str):
         raise HTTPException(404, "Asset not installed")
     return FileResponse(candidate)
 
-# Only hardware explicitly identified in prior user-provided inventory is named.
-# Slots 15–30 are NOT confirmed purchases or engineering-approved parts.
-HARDWARE = [
-    ("HW-01", "Raspberry Pi 5 (4 GB)", "Edge compute", "edge"),
-    ("HW-02", "ESP32-WROOM-32 development board", "Telemetry acquisition", "embedded"),
-    ("HW-03", "ADXL345 accelerometer", "Vibration sensing", "sensor"),
-    ("HW-04", "DS18B20 temperature sensor", "Temperature sensing", "sensor"),
-    ("HW-05", "INA219 current/voltage sensor", "Electrical telemetry", "sensor"),
-    ("HW-06", "12 V DC motor", "Guarded bench rig only", "equipment"),
-    ("HW-07", "Raspberry Pi 5 power supply", "Regulated edge power", "power"),
-    ("HW-08", "Raspberry Pi cooler and case", "Thermal and mechanical protection", "mechanical"),
-    ("HW-09", "32/64 GB microSD card", "Development boot media", "storage"),
-    ("HW-10", "Breadboard and jumper wires", "Low-voltage prototype interconnect", "prototype"),
-    ("HW-11", "ESP32 USB data cable", "Provisioning and debugging", "cable"),
-    ("HW-12", "Digital multimeter", "Electrical measurements", "instrument"),
-    ("HW-13", "Resistors and connectors", "Low-voltage interconnect", "electrical"),
-    ("HW-14", "Fuse, switch and protective motor guard", "Independent bench safeguards", "safety"),
-]
-HARDWARE += [(f"HW-{i:02d}", "Unconfirmed hardware slot", "Pending approved bill of materials", "unconfirmed")
-             for i in range(15, 31)]
+# Canonical BOM identifiers supersede the old grouped HW slots.
+from hardware_catalog import HARDWARE
 
 
 def now_epoch() -> int:
@@ -120,6 +121,21 @@ def init_db():
         db.execute("""CREATE TABLE IF NOT EXISTS audit(
             id INTEGER PRIMARY KEY, time_utc TEXT NOT NULL,
             actor TEXT NOT NULL, action TEXT NOT NULL, detail TEXT NOT NULL)""")
+        db.execute("""CREATE TABLE IF NOT EXISTS comparison_reviews(
+            comparison_id TEXT PRIMARY KEY, revision INTEGER NOT NULL,
+            status TEXT NOT NULL, reviewer TEXT NOT NULL, note TEXT NOT NULL,
+            reviewed_at TEXT NOT NULL)""")
+        db.execute("""CREATE TABLE IF NOT EXISTS comparison_review_events(
+            comparison_id TEXT NOT NULL, revision INTEGER NOT NULL,
+            status TEXT NOT NULL, reviewer TEXT NOT NULL, note TEXT NOT NULL,
+            reviewed_at TEXT NOT NULL, PRIMARY KEY(comparison_id,revision))""")
+        incidents.init_schema(db)
+        team_accounts.init_schema(db)
+        maintenance_requests.init_schema(db)
+        maintenance_exercises.init_schema(db)
+        production_readiness.init_schema(db)
+        acquisition_registry.init_schema(db)
+        delivery_service.init_schema(db)
         db.execute("DELETE FROM sessions WHERE expires_at <= ?", (now_epoch(),))
         number = db.execute("SELECT COUNT(*) FROM users").fetchone()[0]
         if number == 0 and BOOTSTRAP_EMAIL and BOOTSTRAP_PASSWORD:
@@ -209,21 +225,15 @@ FAILED_LOGINS: dict[str, list[int]] = {}
 @app.middleware("http")
 async def secure_headers(request: Request, call_next):
     if request.method in {"POST", "PUT", "PATCH", "DELETE"}:
-        if request.headers.get("content-length", "0").isdigit() and int(request.headers.get("content-length", "0")) > MAX_BODY_BYTES:
-            return JSONResponse({"detail": "Request too large"}, status_code=413)
         origin = request.headers.get("origin")
         if origin and origin.rstrip("/") != str(request.base_url).rstrip("/"):
-            return JSONResponse({"detail": "Origin mismatch"}, status_code=403)
+            return JSONResponse({"detail": "Origin mismatch"}, status_code=403, headers=SECURITY_HEADERS)
     response = await call_next(request)
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["Referrer-Policy"] = "no-referrer"
-    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
-    response.headers["Cache-Control"] = "no-store"
-    response.headers["Content-Security-Policy"] = (
-        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
-        "img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
+    response.headers.update(SECURITY_HEADERS)
     return response
+
+
+app.add_middleware(RequestBodyLimit, max_bytes=MAX_BODY_BYTES)
 
 
 @app.get("/")
@@ -263,7 +273,20 @@ def login(request: Request, body: LoginInput):
         if not user or user["disabled"] or not ok:
             FAILED_LOGINS[ipkey] = attempts + [now_epoch()]
             record_audit(db, "unauthenticated", "login_failed", "invalid credentials")
+            # Persist the denial before propagating the HTTP exception.
+            db.commit()
             raise HTTPException(401, "Invalid email or password")
+        # Password hashing can overlap a credential/access change. Serialize the
+        # final credential check with session issuance so an old password cannot
+        # create a new session after a successful password rotation.
+        db.execute("BEGIN IMMEDIATE")
+        latest = db.execute("SELECT * FROM users WHERE id=?", (user["id"],)).fetchone()
+        if not latest or latest["disabled"] or latest["password_hash"] != user["password_hash"]:
+            FAILED_LOGINS[ipkey] = attempts + [now_epoch()]
+            record_audit(db, "unauthenticated", "login_failed", "invalid credentials")
+            db.commit()
+            raise HTTPException(401, "Invalid email or password")
+        user = latest
         FAILED_LOGINS.pop(ipkey, None)
         token = secrets.token_hex(32)
         csrf = secrets.token_urlsafe(32)
@@ -297,11 +320,34 @@ def logout(request: Request):
 @app.get("/api/hardware")
 def hardware(request: Request):
     require_user(request)
-    return {"mode": "proposed-inventory", "confirmed_hardware_count": 14,
+    return {"mode": "declared-order-inventory", "confirmed_hardware_count": 0, "named_category_count": 30,
+            "catalog_version": "production-design-bom-v1",
             "slots_total": 30, "purchased_count": None,
+            "ordered_count_user_reported": 30, "order_reported_on": "2026-11-20",
             "devices": [{"id": i, "name": n, "purpose": p, "category": c,
-                         "confirmed_inventory_name": c != "unconfirmed", "connected": False}
+                         "confirmed_inventory_name": False, "connected": False,
+                         "lifecycle": "ordered-user-reported", "purchase_verified": False}
                         for i, n, p, c in HARDWARE]}
+
+
+@app.get("/health/live")
+def liveness():
+    return {"status": "alive", "mode": "local-development"}
+
+
+@app.get("/health/ready")
+def readiness_probe(response: Response):
+    available = operations.database_status(DB_PATH)["status"] == "available"
+    response.status_code = 200 if available else 503
+    return {"status": "available" if available else "unavailable", "production_ready": False}
+
+
+@app.get("/api/system/diagnostics")
+def system_diagnostics(request: Request):
+    current = require_user(request)
+    if current["role"] not in ("admin", "auditor"):
+        raise HTTPException(403, "Role not authorized")
+    return operations.diagnostics(DB_PATH, ROOT)
 
 
 @app.get("/api/system/health")
@@ -398,3 +444,108 @@ def list_offline_experiments(request: Request, limit: int = 20):
         })
     return {"experiments": result, "mode": "synthetic-offline-only",
             "model_deployed": False, "hardware_connected": False}
+
+
+def comparison_root():
+    return Path(os.environ.get("EDGEOPS_OFFLINE_EXPERIMENT_ROOT",
+                               str(ROOT / ".local" / "experiments"))).resolve()
+
+
+def comparison_review(db, comparison_id):
+    row = db.execute("SELECT * FROM comparison_reviews WHERE comparison_id=?",
+                     (comparison_id,)).fetchone()
+    return dict(row) if row else {"status": "pending", "revision": 0,
+                                 "reviewer": None, "note": "", "reviewed_at": None}
+
+
+@app.get("/api/model-comparisons")
+def list_model_comparisons(request: Request, limit: int = 20):
+    current = require_user(request)
+    from comparison_registry import verify_comparison
+    result = []
+    with database() as db:
+        for path in sorted((comparison_root() / "comparisons").glob("*.json"))[:500]:
+            if len(result) >= max(1, min(50, limit)):
+                break
+            try:
+                report = verify_comparison(comparison_root(), path.stem)
+                outcome = report["result"]
+                result.append({"comparison_id": path.stem,
+                               "dataset_sha256": report["dataset_sha256"],
+                               "split": outcome["split"], "models": outcome["models"],
+                               "review": comparison_review(db, path.stem),
+                               "review_history": [dict(row) for row in db.execute(
+                                   "SELECT revision,status,reviewer,note,reviewed_at FROM comparison_review_events "
+                                   "WHERE comparison_id=? ORDER BY revision DESC LIMIT 20", (path.stem,))]})
+            except (ValueError, OSError, TypeError, KeyError, AttributeError):
+                continue
+    return {"comparisons": result, "can_review": current["role"] == "admin",
+            "mode": "synthetic-offline-only", "model_deployed": False,
+            "hardware_connected": False, "approval_scope": "offline-report-only"}
+
+
+class ComparisonReviewInput(BaseModel):
+    status: Literal["approved", "rejected", "pending"]
+    note: str = Field(min_length=1, max_length=500)
+    expected_revision: int = Field(ge=0, strict=True)
+
+
+@app.post("/api/model-comparisons/{comparison_id}/review")
+def review_model_comparison(comparison_id: str, body: ComparisonReviewInput, request: Request):
+    current = require_user(request)
+    require_csrf(request, current)
+    if current["role"] != "admin":
+        raise HTTPException(403, "Admin role required for offline report review")
+    if not body.note.strip():
+        raise HTTPException(422, "A review note is required")
+    from comparison_registry import check_id, verify_comparison
+    try:
+        check_id(comparison_id)
+    except ValueError as error:
+        raise HTTPException(422, str(error))
+    try:
+        verify_comparison(comparison_root(), comparison_id)
+    except (ValueError, OSError, TypeError, KeyError, AttributeError):
+        raise HTTPException(409, "Comparison unavailable or failed integrity verification; refresh reports")
+    with database() as db:
+        # Serialize revision check and update, including the matching audit event.
+        db.execute("BEGIN IMMEDIATE")
+        previous = comparison_review(db, comparison_id)
+        if previous["revision"] != body.expected_revision:
+            raise HTTPException(409, "Review changed; refresh before submitting again")
+        reviewed_at = datetime.now(timezone.utc).isoformat()
+        db.execute("""INSERT INTO comparison_reviews VALUES(?,?,?,?,?,?)
+            ON CONFLICT(comparison_id) DO UPDATE SET revision=excluded.revision,
+            status=excluded.status, reviewer=excluded.reviewer,
+            note=excluded.note, reviewed_at=excluded.reviewed_at""",
+                   (comparison_id, previous["revision"] + 1, body.status,
+                    current["email"], body.note.strip(), reviewed_at))
+        db.execute("INSERT INTO comparison_review_events VALUES(?,?,?,?,?,?)",
+                   (comparison_id, previous["revision"] + 1, body.status,
+                    current["email"], body.note.strip(), reviewed_at))
+        record_audit(db, current["email"], "offline_comparison_review",
+                     json.dumps({"comparison_id": comparison_id,
+                                 "revision": previous["revision"] + 1,
+                                 "status": body.status}))
+        review = comparison_review(db, comparison_id)
+    return {"review": review, "approval_scope": "offline-report-only", "model_deployed": False,
+            "hardware_connected": False}
+
+
+incidents.install_routes(app, database, require_user, require_csrf, record_audit)
+
+maintenance_requests.install_routes(app, database, require_user, require_csrf, record_audit)
+
+maintenance_exercises.install_routes(app, database, require_user, require_csrf, record_audit)
+
+production_readiness.install_routes(app, database, require_user, require_csrf, record_audit)
+
+acquisition_registry.install_routes(app, database, require_user, require_csrf, record_audit)
+
+delivery_service.install_routes(app, database, require_user, require_csrf, record_audit, DB_PATH.parent / "delivery-spool.sqlite3")
+
+observation_queries.install_routes(app, database, require_user)
+
+physical_build.install_routes(app, require_user, ROOT)
+
+team_accounts.install_routes(app, database, require_user, require_csrf, password_hash, password_matches, record_audit)

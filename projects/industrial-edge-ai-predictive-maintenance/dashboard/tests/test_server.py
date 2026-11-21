@@ -30,6 +30,9 @@ class DashboardApiTests(unittest.TestCase):
         os.environ["EDGEOPS_ADMIN_EMAIL"] = cls.email
         os.environ["EDGEOPS_ADMIN_PASSWORD"] = cls.password
         import server
+        # Other test modules may already have imported the telemetry ledger.
+        # Bind it to this suite's temporary database before any fixture writes.
+        importlib.reload(server.telemetry_store)
         cls.server = importlib.reload(server)
         cls.server.init_db()
 
@@ -71,7 +74,10 @@ class DashboardApiTests(unittest.TestCase):
         self.sign_in()
         data = self.http.get("/api/hardware").json()
         self.assertEqual(len(data["devices"]), 30)
-        self.assertEqual(data["confirmed_hardware_count"], 14)
+        self.assertEqual(data["confirmed_hardware_count"], 0)
+        self.assertEqual(data["named_category_count"], 30)
+        self.assertEqual([d["id"] for d in data["devices"]], [f"BOM-{i:02d}" for i in range(1,31)])
+        self.assertTrue(all(d["lifecycle"] == "ordered-user-reported" and not d["purchase_verified"] for d in data["devices"]))
         self.assertEqual(sum(1 for d in data["devices"] if d["connected"]), 0)
 
     def test_06_static_file_allowlist_blocks_secrets(self):

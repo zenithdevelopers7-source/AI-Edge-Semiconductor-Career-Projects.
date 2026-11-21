@@ -1,0 +1,242 @@
+/* EDGEOPS Cobalt & Teal — final semantic color layer for every workspace. */
+:root{color-scheme:light;--bg:#f2f6fc;--body:#f2f6fc;--panel:#fff;--border:#cbd7e6;--line:#d7e1ed;--text:#14263e;--muted:#465b74;--sub:#53677f;--teal:#087b78;--teal2:#076b68;--amber:#87500a;--red:#aa2f47;--ink:#14263e;--secondary:#465b74;--primary:#245bd6;--primary-hover:#1948b3;--surface-soft:#edf3fb;--success:#096b51;--success-bg:#e5f5ed;--warning:#87500a;--warning-bg:#fff2db;--danger:#a72b46;--danger-bg:#fceaf0}
+body.dashboard-page{--bg:#f2f6fc;--panel:#fff;--text:#14263e;--muted:#465b74;--sub:#53677f;--line:#d7e1ed;background:var(--bg);color:var(--ink);font-size:16px}
+.dashboard-page .workspace{background:var(--bg);color:var(--ink)}
+.dashboard-page main{background:transparent}
+.dashboard-page :is(h1,h2,h3,h4,strong){color:var(--ink)}
+.dashboard-page :is(.panel,.kpi-card,.metric,.product-stat){background:#fff;border-color:#cbd7e6;box-shadow:0 4px 18px #254d7b08}
+.dashboard-page :is(.panel,.kpi-card):hover{border-color:#a6bdd9;box-shadow:0 6px 22px #254d7b0e}
+.dashboard-page :is(.section-heading,.compact-head,.side-head,.settings-rows>div,.activity-feed>div,.alert-item,.arch-facts>div,.arch-map-bottom,.profile-identity,.product-facts>div,.release-checklist>div,.knowledge-card,.lineage-grid>div,.planning-pagination,.component-gates li){border-color:var(--line)}
+.dashboard-page :is(.top-heading h1,.section-heading h2,.side-head h2,.compact-head h2,.product-hero h2,.profile-focus h2,.product-empty h3,.product-dialog h2,.product-dialog h3){color:var(--ink)}
+.dashboard-page :is(.top-heading p,.section-heading p,.compact-head p,.product-hero p,.product-pad p,.profile-focus p,.product-empty p,.product-stat small,.product-stat>span,.profile-identity small,.insight-card p,.security-tile p,.report-callout p,.product-dialog p,.product-muted,.receipt-list p,.product-checks,.journey-list small,.model-rail small,.knowledge-card small,.knowledge-toolbar>span,.product-facts dt,.replay-controls span,.replay-controls small,.workorder-timeline small,.planning-queue-head p,.planning-row-reference,.planning-pagination>span,.planning-detail-top>span:last-child,.planning-dialog label small,.planning-history time,.planning-history small,.component-gates span,.hardware-filter-fields label,.hardware-result-tools>span,.asset-sensor-plan p,.sensor-plan-list small,.minor,.metric-foot,.metric-label,.asset-detail-body>p,.asset-detail-facts dt,.signal-tools,.scope-strip,.scope-strip time,.settings-rows p,.session-panel p,.arch-inspector>p,.arch-facts dt,.arch-detail-header,.arch-map-help,.arch-support-content p,.arch-bottom-note,.architecture-status span:not(.arch-status-dot),.arch-toolbar-title span){color:var(--secondary);font-size:13px;line-height:1.7}
+.dashboard-page :is(.product-pad p,.profile-focus p,.product-hero p,.product-dialog p,.asset-detail-body>p,.arch-inspector>p){font-size:15px}
+.dashboard-page .product-muted{color:var(--secondary)!important}
+.dashboard-page :is(.eyebrow,.section-kicker,.asset-id,.insight-label){color:#24588a;font-size:12px;letter-spacing:1.25px}
+.dashboard-page :is(.section-heading h2,.side-head h2,.compact-head h2){font-weight:650}
+.dashboard-page :is(.side-head button,.compact-head button,.governance-preview>button,.asset-link,.hardware-detail-link){color:#1c55b2;font-size:14px}
+.dashboard-page :is(.side-head button,.compact-head button,.asset-link):hover{color:#123e87}
+.dashboard-page :is(.kpi-value,.kpi-value.status-value,.kpi-value span,.metric-number,.product-stat strong,.sensor-readouts strong,.fleet-legend strong,.overview-planning-counts strong,.settings-rows strong,.asset-detail-facts dd,.product-facts dd,.arch-facts dd,.audit-meta strong){color:var(--ink)}
+.dashboard-page :is(.kpi-title strong,.kpi-caption,.metric-label,.metric-foot,.sensor-readouts>div>span,.sensor-readouts small,.fleet-legend,.fleet-donut small,.activity-feed span,.activity-feed time,.alert-description,.alert-time,.component-grid small,.overview-planning-counts span,.overview-planning-counts p){color:var(--secondary);font-size:13px}
+.dashboard-page .kpi-icon{color:#245bb1;background:#e6efff;border:0}
+.dashboard-page .kpi-icon.amber{color:var(--warning);background:var(--warning-bg)}
+.dashboard-page :is(.subtle-chip,.small-pill,.compact-status,.compact-head>span,.arch-map-pill,.comparison-status){color:#35516f;background:#edf3fa;border:1px solid #c2d1e4;font-size:12px}
+.dashboard-page :is(.demo-flag,.mini-warning,.product-badge.amber){color:var(--warning);background:var(--warning-bg);border-color:#e1c48b;font-size:11px}
+.dashboard-page :is(.product-badge,.status-tag.nominal,.planning-status.approved){color:var(--success);background:var(--success-bg);border:1px solid #a8cdbd}
+.dashboard-page :is(.status-tag.watch,.planning-status.submitted,.hardware-lifecycle){color:var(--warning);background:var(--warning-bg);border-color:#e1c48b}
+.dashboard-page :is(.status-tag.critical,.planning-status.rejected){color:var(--danger);background:var(--danger-bg);border-color:#e3b7c2}
+.dashboard-page :is(.status-tag,.planning-status){font-size:12px;padding:4px 8px}
+.dashboard-page .hardware-lifecycle{padding:4px 7px;border:1px solid #e1c48b;border-radius:4px;font-size:12px}
+.dashboard-page .planning-status.draft{color:#3d536e;background:#edf2f8;border-color:#b9c9dd}
+.dashboard-page :is(.turquoise-text,.mint){color:#087469}
+.dashboard-page :is(.amber-text,.amber){color:var(--warning)}
+/* Navigation keeps its own dark, high-contrast palette. */
+.dashboard-page .sidebar{color-scheme:dark;background:#10253e;border-color:#213b57;box-shadow:3px 0 18px #0f284312}
+.dashboard-page .sidebar :is(strong,h2){color:#edf5ff}
+.dashboard-page .sidebar .brand-accent{color:#86e8d5}
+.dashboard-page .sidebar .brand-gear{color:#86e8d5}
+.dashboard-page .sidebar :is(.brand small,.workspace-picker small,.nav-group-title,.sidebar-foot,.sidebar-foot strong,.account-text small,.logout){color:#becfe3;font-size:12px}
+.dashboard-page .workspace-picker{background:#19354f;border-color:#46617c}
+.dashboard-page .workspace-picker strong{font-size:13px}
+.dashboard-page .workspace-monogram{color:#c0f3e5;background:#22584f}
+.dashboard-page .nav-item{color:#cfdaeb;font-size:14px}
+.dashboard-page .nav-item:hover{background:#213f5c;color:#fff}
+.dashboard-page .nav-item.active{color:#c4f6ec;background:#24506b;border-color:#4d8195;box-shadow:inset 3px 0 #8be4d1}
+.dashboard-page .nav-note{color:#e0eaf7;background:#304e6b;font-size:10px}
+.dashboard-page .nav-count{color:#ffe1d1;background:#7a3d37;font-size:12px}
+.dashboard-page .sidebar-account{background:#10253e;border-color:#36516e}
+.dashboard-page .sidebar .avatar{background:#2c5b53;color:#c4f7e6;border-color:#668e82}
+.dashboard-page .sidebar-foot{border-color:#36516e}
+.dashboard-page .topbar{background:#ffffffed;color:var(--ink);border-color:#d3deec;box-shadow:0 2px 14px #234c7906}
+.dashboard-page :is(.topbar-title strong,.connection-chip,.command-trigger,.notification,.menu-toggle){color:#324c69}
+.dashboard-page .topbar-title strong{font-size:14px}
+.dashboard-page .top-avatar{color:#154f74;background:#e3f1fb;border-color:#aec7df}
+.dashboard-page .search-label{background:#f3f7fc;border-color:#b7c9df}
+.dashboard-page .search-label span{color:#275784}
+.dashboard-page .command-trigger kbd,.dashboard-page kbd{color:#36506c;background:#edf3fa;border-color:#afc2da;font-size:11px}
+.dashboard-page .focus-toggle{background:#f7faff;border-color:#adc1dc;color:#254970;font-size:12px}
+/* Primary actions use cobalt; secondary actions stay readable on white. */
+.dashboard-page :is(.quick-primary,.quick-panel .quick-primary){color:#fff;background:var(--primary);border:1px solid var(--primary);box-shadow:0 3px 8px #245bd619;font-size:14px}
+.dashboard-page :is(.quick-primary,.quick-panel .quick-primary):hover{color:#fff;background:var(--primary-hover);border-color:var(--primary-hover)}
+.dashboard-page :is(.action-outline,.quick-outline,.ack-btn,.icon-button),.dashboard-page :is(#refresh-hardware,#refresh-audit,#refresh-experiments){color:#244d83;background:#fff;border:1px solid #96aecb;box-shadow:none;font-size:13px}
+.dashboard-page :is(.action-outline,.quick-outline,.ack-btn,.icon-button):hover,.dashboard-page :is(#refresh-hardware,#refresh-audit):hover{color:#173d73;background:#edf4ff;border-color:#6e95c5}
+.dashboard-page :is(button,input,select,textarea,a,summary):focus-visible{outline:3px solid #2864d6;outline-offset:3px}
+.dashboard-page .sidebar button:focus-visible{outline-color:#a3efdd}
+.dashboard-page button:disabled{opacity:.65}
+/* Fields and tables are deliberately light throughout every domain. */
+.dashboard-page :is(.comparison-review-form,.preferences-body,.knowledge-toolbar,.hardware-filter-fields,.table-toolbar,.product-label,.planning-dialog,.planning-queue-toolbar,.command-dialog) :is(input,select,textarea),.dashboard-page .command-dialog>input,.dashboard-page .chart-key select,.dashboard-page .select-wrap select,.dashboard-page #asset-sort{color:#172e49;background:#f9fbff;border-color:#8fa8c7;font-size:14px;box-shadow:none;color-scheme:light}
+.dashboard-page input[type=search],.dashboard-page .search-label input{color:#172e49;background:transparent;font-size:14px}
+.dashboard-page :is(input,textarea)::placeholder{color:#566b84;opacity:1}
+.dashboard-page :is(.product-label,.knowledge-toolbar label,.comparison-review-form label,.table-toolbar label,.planning-queue-toolbar label){color:#314d6c;font-size:14px}
+.dashboard-page :is(.table-wrap,.large-chart,.command-chart,.replay-chart){background:#fff;border-color:#ccd9e8}
+.dashboard-page table{color:var(--ink)}
+.dashboard-page th{color:#314b69;background:#edf3fa;border-color:#cbd9e9;font-size:12px;font-weight:650}
+.dashboard-page td{color:#243c58;border-color:#dce5ef;font-size:14px;line-height:1.65}
+.dashboard-page td strong{color:#1d3551}
+.dashboard-page td small{color:#52677f;font-size:12px}
+.dashboard-page tbody tr:hover{background:#f0f6ff}
+.dashboard-page .table-toolbar{background:#edf3fb;border-color:#bdcde1}
+.dashboard-page .table-toolbar>span[role=status]{color:#3a5575;font-size:13px}
+.dashboard-page .bar-track{background:#dce6f2}
+.dashboard-page .chart-key{color:#244566}
+.dashboard-page .chart-times{color:#526881;font-size:12px}
+.dashboard-page :is(#trend-chart,#telemetry-chart,.replay-chart svg) text{fill:#425a76}
+.dashboard-page :is(#trend-chart,#telemetry-chart) line{stroke:#d5dfec}
+.dashboard-page .replay-chart svg>path:first-child{stroke:#d5dfec}
+.dashboard-page .replay-chart svg>path:nth-child(2){stroke:#087b78}
+.dashboard-page .replay-chart svg>circle{fill:#087b78}
+.dashboard-page .chart-dot{background:#087b78}
+.dashboard-page .fleet-donut{background:conic-gradient(#138b78 0 66.67%,#bd7b1b 66.67% 91.67%,#bd4260 91.67% 100%)}
+.dashboard-page .fleet-donut:before{background:#fff}
+.dashboard-page .fleet-donut strong{color:#162d48}
+.dashboard-page .dot-nominal{background:#138b78}.dashboard-page .dot-watch{background:#bd7b1b}.dashboard-page .dot-critical{background:#bd4260}
+/* Information, empty, error and audit states share semantic colors. */
+.dashboard-page :is(.disclosure,.product-callout,.ai-advisory,.asset-detail-note,.planning-boundary,.arch-decision){background:#eaf3ff;border-color:#b2c9e5;color:#2e4b70}
+.dashboard-page :is(.disclosure strong,.disclosure-mark,.product-callout>strong,.ai-advisory>span,.arch-decision strong){color:#204d81}
+.dashboard-page :is(.product-callout p,.ai-advisory strong,.arch-decision p){color:#365778;font-size:14px}
+.dashboard-page .planning-boundary{color:#2b4f77!important}
+.dashboard-page .audit-feedback,.dashboard-page #planning-feedback{background:#edf4fc;border-color:#c1d2e7;color:#355476;font-size:13px}
+.dashboard-page .audit-feedback[data-state=ok],.dashboard-page #planning-feedback[data-state=ok]{background:#e8f5ef;color:#146a50;border-color:#b4d7c7}
+.dashboard-page .audit-feedback[data-state=loading]{color:#37577b}
+.dashboard-page :is(.audit-feedback[data-state=error],.api-recovery),.dashboard-page #planning-feedback[data-state=error]{background:#fcecf0;border-color:#ddb2bf;color:#972a43}
+.dashboard-page .planning-error{color:#a12642!important}
+.dashboard-page :is(.empty-state,.signal-data summary,.dialog-foot){color:#425b77;font-size:14px}
+.dashboard-page .footer{background:#eaf0f8;border-color:#cbd9e9;color:#48617d;font-size:12px}
+.dashboard-page .toast{background:#163b5e;color:#fff;border:1px solid #54789a;font-size:14px;box-shadow:0 10px 35px #183b612e}
+.dashboard-page .alert-icon.critical{color:#a52a43;background:#fbe6ed;border:1px solid #e5b5c3}
+.dashboard-page .alert-icon.watch{color:#85500b;background:#fff0d7;border:1px solid #e4c58f}
+.dashboard-page .alert-title{color:#1b334f;font-size:14px}
+.dashboard-page :is(.sensor-readouts>div,.component-grid>div,.audit-meta>div,.governance-grid>div,.settings-rows>div,.session-panel){background:#f1f6fc;border-color:#c5d5e7;color:#274561}
+.dashboard-page .sensor-readouts strong{font-size:20px}
+.dashboard-page .sensor-readouts small{font-size:12px}
+.dashboard-page .component-illustration{background:#e0edf9;color:#225f85}
+.dashboard-page .governance-grid>div :is(span,strong){color:#355775}
+.dashboard-page .quick-panel{background:#eaf2ff}
+.dashboard-page .overview-planning-counts>div{border-color:#d0deed}
+/* Product profiles, knowledge, release and workflow views. */
+.dashboard-page :is(.profile-selector button,.model-rail>div,.workorder-timeline button,.journey-list button,.planning-history li,.sensor-plan-list button){background:#f2f6fc;border-color:#becfe4;color:#233f5e}
+.dashboard-page :is(.profile-selector button[aria-pressed=true],.model-rail>div:first-child,.workorder-timeline .current button){background:#e4f3ef;border-color:#6eac98;color:#125e49}
+.dashboard-page .profile-focus{background:linear-gradient(135deg,#eaf4fc,#f5fbff);color:var(--ink)}
+.dashboard-page :is(.profile-monogram,.journey-number,.model-rail span,.workorder-timeline span){background:#e1eaf8;border-color:#a4bddb;color:#2c5684}
+.dashboard-page .profile-selector button[aria-pressed=true] .profile-monogram,.dashboard-page .workorder-timeline :is(.current,.visited) span{background:#cbe9dd;border-color:#7aaa94;color:#125a45}
+.dashboard-page .profile-selector strong{color:inherit}
+.dashboard-page .product-tabs{border-color:#bccce0}
+.dashboard-page .product-tabs button{color:#435e7e;background:transparent}
+.dashboard-page .product-tabs button[aria-pressed=true]{color:#204fa8;border-color:#245bd6;background:#e7efff}
+.dashboard-page .journey-list button:hover,.dashboard-page .sensor-plan-list button:hover{background:#e5f0ff;border-color:#6c96c9}
+.dashboard-page :is(.empty-orbit,.knowledge-file){color:#216482;background:#e3f0f9;border-color:#a7c9de}
+.dashboard-page .receipt-list li:before{color:#155f4c;background:#def1e9;border-color:#9bc9b6}
+.dashboard-page .release-checklist>div>span:first-child{color:#87500a}
+.dashboard-page .stage-count{color:#61978f}
+.dashboard-page .product-checks{color:#36516c;font-size:14px}
+.dashboard-page :is(.knowledge-toolbar input,.replay-chart){background:#f7faff}
+.dashboard-page .hardware-toolbar{background:#eff4fb;border-color:#c0d0e5}
+.dashboard-page :is(.hardware-quick-filters button,.planning-status-filters button){background:#fff;border-color:#a8bdd8;color:#355473;font-size:13px}
+.dashboard-page :is(.hardware-quick-filters button[aria-pressed=true],.planning-status-filters button[aria-pressed=true]){color:#124b98;background:#e2edff;border-color:#739acb}
+.dashboard-page :is(.hardware-quick-filters button>span,.planning-status-filters button span){background:#edf2f9;color:#35516f;font-size:12px}
+.dashboard-page .hardware-category-label{color:#33597b;background:#e8f1fa;border-color:#b7cce3}
+.dashboard-page .bom-reference{color:#35516f}
+.dashboard-page .hardware-detail-purpose{color:#2c4d6e!important}
+.dashboard-page :is(.component-gates strong,.planning-dialog h3){color:#203f5e}
+.dashboard-page .component-gates{color:#1f6c58}
+.dashboard-page .asset-sensor-plan{background:#f0f6fc;border-color:#b7ccdf}
+.dashboard-page .asset-sensor-plan summary{color:#195b82;font-size:14px}
+.dashboard-page .planning-history li{border-left-color:#5c9b89}
+.dashboard-page .planning-history strong{color:#213d5c}
+/* Architecture diagrams and API evidence remain readable on the light canvas. */
+.dashboard-page .architecture-status{background:#e9f4f0;border-color:#afd0c1}
+.dashboard-page .architecture-status strong{color:#185943}
+.dashboard-page :is(.arch-view-switch,.arch-node){background:#f0f5fc;border-color:#aec5df;color:#24486e}
+.dashboard-page .arch-tab{background:transparent;color:#3c5979}
+.dashboard-page .arch-tab.active{background:#dae8ff;color:#174a98;border-color:#7299cd}
+.dashboard-page .arch-node :is(strong,small){color:#2a4766}
+.dashboard-page .arch-node-icon{color:#1e6890;background:#e1edf8}
+.dashboard-page .arch-node-number{color:#486483}
+.dashboard-page .arch-node.active{background:#e4f3ec;border-color:#6aa58e;box-shadow:0 0 0 2px #c0e1d3}
+.dashboard-page .arch-pipeline[data-mode=security] .arch-node{background:#f0f3fd;border-color:#a8b7d9}
+.dashboard-page .arch-pipeline[data-mode=security] .arch-node.active{background:#e3eafd;border-color:#6d88c3}
+.dashboard-page .arch-pipeline[data-mode=failure] .arch-node{background:#fcf2f5;border-color:#d5a9b7}
+.dashboard-page .arch-pipeline[data-mode=failure] .arch-node.active{background:#f9e5ec;border-color:#bc778d}
+.dashboard-page :is(.arch-phase,.arch-phase[data-status=lab],.arch-phase[data-status=demo]){color:#23634f;background:#e4f3eb;border-color:#a7ccb9}
+.dashboard-page .arch-phase[data-status=blocked]{color:#86500e;background:#fff0d6;border-color:#dbbc81}
+.dashboard-page .arch-support-content strong{color:#284968}
+.dashboard-page .arch-link{color:#4e7198}
+/* Modal surfaces and saved records use the same color tokens. */
+.dashboard-page :is(dialog,.product-dialog){background:#fff;border-color:#a5bdd8;color:#1f3855;box-shadow:0 25px 100px #0c2b5057}
+.dashboard-page dialog::backdrop{background:#102a48a8;backdrop-filter:blur(5px)}
+.dashboard-page :is(.product-dialog-head,.dialog-head,.asset-detail-facts){border-color:#c3d2e5;background:transparent}
+.dashboard-page .command-result{color:#244466;background:#f1f6fc;border-color:#c3d3e8}
+.dashboard-page .command-result:hover,.dashboard-page .command-result:focus{background:#e3efff}
+.dashboard-page .command-result :is(strong,span){color:#254d81}
+.dashboard-page .command-result :is(small,i){color:#4e6580;font-size:13px}
+.dashboard-page #comparison-list>article{background:#fff;border-color:#c5d4e7}
+.dashboard-page #comparison-list details{background:#f1f6fc;border-color:#c5d4e7}
+.dashboard-page #comparison-list p{color:#435c78;font-size:14px}
+.dashboard-page .comparison-review-form label{color:#385575}
+/* Photograph overlays stay dark for clear white image captions. */
+.dashboard-page .workspace-welcome{background:#102331;border-color:#57778d}
+.dashboard-page .workspace-welcome .visual-banner h2{color:#fff}
+.dashboard-page .workspace-welcome .visual-banner p{color:#e0eaf4}
+.dashboard-page .visual-banner .section-kicker{color:#acf1e2}
+.dashboard-page .visual-banner-actions .quick-primary{background:#bcf0df;color:#123c32;border-color:#bcf0df}
+.dashboard-page .visual-banner-actions .action-outline{background:#163248dc;color:#f0f6fc;border-color:#a0b5c7}
+.dashboard-page :is(.visual-image-caption,.machine-caption,.asset-concept-visual figcaption,.hardware-intro figcaption){color:#f2f7ff;background-color:#0b2033dc}
+.dashboard-page .hero-machine{background:#122837;border-color:#93aec3}
+.dashboard-page .hardware-intro{background:#e8f3fa;border-color:#b7d1df}
+.dashboard-page .hardware-intro h2{color:#153750}
+.dashboard-page .hardware-intro p{color:#3c5a72;font-size:15px}
+.dashboard-page .hardware-intro .section-kicker{color:#266782}
+.dashboard-page .hardware-intro-note{color:#246a5c;border-color:#aecfc7;font-size:13px}
+.dashboard-page .asset-concept-visual{border-color:#a5bed4}
+/* Sign-in combines the photographic introduction with a bright, legible form. */
+body:has(.login-shell){background:#f2f6fc;color:#14263e;color-scheme:light}
+.login-shell .login-panel{background:#f9fbff;color:#14263e;border-left:1px solid #cbd9e8}
+.login-shell .brand strong{color:#173550}.login-shell .brand strong span,.login-shell .brand-symbol{color:#087b78}
+.login-shell .brand-subtitle,.login-shell .eyebrow{color:#415e7b;font-size:13px}
+.login-shell .accent-bar{background:#c8d7e8}
+.login-shell .login-head h2{color:#142d49}
+.login-shell .login-head p{color:#415a76;font-size:15px}
+.login-shell .demo-notice{background:#e9f2ff;border-color:#adc8e5;color:#345474;font-size:13px}
+.login-shell .demo-notice strong{color:#204b79}
+.login-shell form label{color:#273e5a;font-size:14px}
+.login-shell form input:not([type=checkbox]){background:#fff;border-color:#8fa8c7;color:#172f4d;font-size:15px}
+.login-shell form input::placeholder{color:#566b83;opacity:1}
+.login-shell form input:focus{border-color:#245bd6;box-shadow:0 0 0 3px #245bd622}
+.login-shell .password-wrap button,.login-shell .text-button{color:#1e52aa;font-size:13px}
+.login-shell .login-options .remember{color:#3b5571;font-size:13px}
+.login-shell .remember input{accent-color:#245bd6}
+.login-shell .primary-login{color:#fff;background:#245bd6;border-color:#245bd6;font-size:16px}
+.login-shell .primary-login:hover{background:#1948b3}
+.login-shell :is(.secondary-login,.outline-login){color:#234d85;background:#fff;border-color:#9ab2cf;font-size:14px}
+.login-shell :is(.secondary-login,.outline-login):hover{color:#173e78;background:#e9f1ff}
+.login-shell .secondary-login small{color:#566b83;font-size:12px}
+.login-shell .or-divider{color:#526983;font-size:12px}
+.login-shell .or-divider:before,.login-shell .or-divider:after{border-color:#c5d3e5}
+.login-shell :is(.access-note,.login-footer){color:#4e6580;font-size:12px}
+.login-shell .form-error{color:#a72743;font-size:13px}
+.login-shell :is(button,input,a):focus-visible{outline:3px solid #245bd6;outline-offset:3px}
+.login-shell .industrial-hero{color-scheme:dark}
+.login-shell .industrial-hero .hero-kicker{color:#b9e6e5;font-size:12px}
+.login-shell .industrial-hero .hero-kicker span{color:#c5d9e7;font-size:11px}
+.login-shell .hero-content>p{color:#dfebf3;font-size:15px}
+.login-shell .readout div>span,.login-shell .readout strong small{color:#d0e2ed;font-size:12px}
+.login-shell .hero-capabilities strong{color:#d9eaf4;font-size:13px}
+.login-shell .hero-footer{color:#d1e3ef;font-size:12px}
+@media(max-width:540px){.dashboard-page .topbar-title strong:after{color:#20435f}.dashboard-page .top-heading p{font-size:14px}.dashboard-page .disclosure{font-size:12px}.dashboard-page .kpi-title strong{font-size:13px}.dashboard-page .kpi-caption{font-size:12px}.dashboard-page .scope-strip{font-size:11px}.dashboard-page .scope-strip time{font-size:10px}.dashboard-page .sensor-readouts>div>span{font-size:13px}.dashboard-page .hardware-quick-filters button,.dashboard-page .planning-status-filters button{font-size:12px}.dashboard-page .visual-banner-copy .section-kicker{font-size:11px}.dashboard-page .workspace-welcome .visual-banner p{font-size:14px}.login-shell .hero-content>p{font-size:14px}}
+
+.dashboard-page .sidebar .brand small{font-size:11px;white-space:normal;max-width:160px;line-height:1.5;letter-spacing:1px}.dashboard-page .account-text strong{font-size:12px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.dashboard-page :is(.fleet-legend>div span,.metric-unit,.arch-map-bottom span,.audit-meta span,.security-tile>span,.settings-rows>div strong,.settings-rows>div>span){color:#415c78;font-size:13px}
+.dashboard-page .metric-unit{font-size:14px}
+.dashboard-page :is(.arch-map-help,.arch-bottom-note){background:#edf4fc;border-color:#bed1e8;color:#3e5a78}
+.dashboard-page #comparison-list summary{color:#2b537e;font-size:14px}
+.dashboard-page .page-section .panel{min-width:0;max-width:100%}
+.dashboard-page .table-wrap{min-width:0;max-width:100%}
+.dashboard-page :is(.compact-head,.side-head){flex-wrap:wrap;row-gap:10px}
+.dashboard-page :is(.compact-head,.side-head)>div{min-width:0}
+.dashboard-page :is(.compact-head,.side-head) button{white-space:normal;max-width:100%}
+@media(max-width:540px){.dashboard-page :is(.overview-primary,.overview-secondary,.overview-tertiary){grid-template-columns:minmax(0,1fr)}}
+.dashboard-page .top-actions{flex-wrap:wrap}
+.dashboard-page .settings-rows>div strong{color:#244360!important}
+.login-shell .hero-content h1{color:#f3f9ff}
+.dashboard-page :is(#trend-chart,#telemetry-chart) text{font-size:12px}
+.dashboard-page .api-recovery p{color:#922c43}
+.dashboard-page .release-checklist strong{color:#243e5b}

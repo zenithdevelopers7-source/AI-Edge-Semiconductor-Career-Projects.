@@ -1,0 +1,261 @@
+{
+  "version": "fixed-30-physical-build-v1",
+  "scope": "physical-preparation-only",
+  "ordered_count_user_reported": 30,
+  "order_reported_on": "2026-11-20",
+  "order_verified": false,
+  "additional_hardware_allowed": false,
+  "substitution_allowed": false,
+  "hardware_connected": false,
+  "production_ready": false,
+  "source_csv_sha256": "7f3f0a6a0275784e2dd7cfc5cbf7e9ef4cc38824ff707fe67ceff247e7288884",
+  "pins": {
+    "SDA": 21,
+    "SCL": 22,
+    "temperature_data": 4
+  },
+  "rows": [
+    {
+      "id": "BOM-01",
+      "selected_family": "Raspberry Pi 5",
+      "quantity_basis": "1",
+      "role": "Edge computer",
+      "connection": "Fit P11 storage, P10 cooler and compatible P9 case. P8 to Pi USB-C. P14 USB goes to ESP32 only when Pi is the chosen host.",
+      "pending": "Board/case/cooler fit and peripheral budget."
+    },
+    {
+      "id": "BOM-02",
+      "selected_family": "Classic ESP32-WROOM-32/32E DevKit",
+      "quantity_basis": "1",
+      "role": "Acquisition controller",
+      "connection": "Use labelled 3V3, GND, GPIO21, GPIO22 and GPIO4 for the sensor-only map. Power through P14 USB from one host.",
+      "pending": "Actual DevKit pin labels, USB socket and regulator/breakout compatibility."
+    },
+    {
+      "id": "BOM-03",
+      "selected_family": "ADXL345 / GY-291 candidate",
+      "quantity_basis": "1",
+      "role": "Acceleration sensor",
+      "connection": "SDA to GPIO21; SCL to GPIO22; logic ground to GND; reviewed 3.3V-compatible supply. Fix rigidly to the motor casing, away from the shaft.",
+      "pending": "Supply terminal, onboard regulator/pull-ups and CS/SDO straps."
+    },
+    {
+      "id": "BOM-04",
+      "selected_family": "Three-wire DS18B20 probe",
+      "quantity_basis": "1",
+      "role": "Case temperature sensor",
+      "connection": "Verified VDD to 3.3V, GND to logic GND and DATA to GPIO4. Effective 4.7k pull-up DATA to 3.3V where required. Secure probe to stationary casing.",
+      "pending": "Supplier wire identification; do not infer function from colour."
+    },
+    {
+      "id": "BOM-05",
+      "selected_family": "INA219 breakout",
+      "quantity_basis": "1",
+      "role": "DC electrical sensing",
+      "connection": "Logic SDA/SCL share GPIO21/22 and logic GND. Supply only through its documented 3.3V-compatible terminal. Keep VIN+/VIN- load terminals unconnected in sensor-only assembly.",
+      "pending": "Shunt resistance/power, board/terminal ratings and motor startup/stall compatibility."
+    },
+    {
+      "id": "BOM-06",
+      "selected_family": "GA25-370/JGA25-370 candidate, 12V ~170RPM",
+      "quantity_basis": "1",
+      "role": "Guarded mechanical load",
+      "connection": "Fit matched P25 mounting and P20 guard. Leave motor leads disconnected until the exact power circuit is released.",
+      "pending": "Exact variant, rated/no-load/startup/stall currents and mounting drawing."
+    },
+    {
+      "id": "BOM-07",
+      "selected_family": "Enclosed regulated 12V adapter",
+      "quantity_basis": "1",
+      "role": "Motor power domain",
+      "connection": "Keep separate from Pi/ESP32 power. Reserved for reviewed protected motor branch; no live wiring assignment yet.",
+      "pending": "GitHub notes existing 12V 2A as provisional; older 5A target is not an approval. Actual label/protection/polarity required."
+    },
+    {
+      "id": "BOM-08",
+      "selected_family": "Official Pi 27W USB-C supply",
+      "quantity_basis": "1",
+      "role": "Pi power",
+      "connection": "Connect its USB-C plug to Pi USB-C after storage/cooling assembly; independent of the 12V motor branch.",
+      "pending": "Genuine compatible 5.1V/5A profile and correct plug."
+    },
+    {
+      "id": "BOM-09",
+      "selected_family": "Pi 5 case",
+      "quantity_basis": "1",
+      "role": "Mechanical protection",
+      "connection": "Fit around Pi without obstructing P10 cooling, ports, storage access or cabling.",
+      "pending": "Case/cooler pair and clearance."
+    },
+    {
+      "id": "BOM-10",
+      "selected_family": "Pi 5 Active Cooler",
+      "quantity_basis": "1",
+      "role": "Thermal control",
+      "connection": "Fit using its instructions and connect its keyed plug to the Pi 5 dedicated fan connector.",
+      "pending": "Exact cooler/case fit; do not substitute a GPIO header socket."
+    },
+    {
+      "id": "BOM-11",
+      "selected_family": "64GB microSD",
+      "quantity_basis": "1",
+      "role": "OS and local storage",
+      "connection": "Image and insert into Pi microSD slot with power disconnected.",
+      "pending": "Actual card capacity/authenticity and OS image."
+    },
+    {
+      "id": "BOM-12",
+      "selected_family": "830-point breadboard",
+      "quantity_basis": "1",
+      "role": "Sensor-only prototype",
+      "connection": "Use for low-current logic/sensor rails only. Check split rails and ESP32 pin clearance.",
+      "pending": "Continuity of actual rails; no motor current."
+    },
+    {
+      "id": "BOM-13",
+      "selected_family": "Dupont jumpers",
+      "quantity_basis": "1 assortment",
+      "role": "Low-current connections",
+      "connection": "Short secure sensor signal/supply links matching the wire schedule.",
+      "pending": "Header fit and continuity; not motor power wiring."
+    },
+    {
+      "id": "BOM-14",
+      "selected_family": "Matching ESP32 USB data cable",
+      "quantity_basis": "1",
+      "role": "Single host/power/serial link",
+      "connection": "Computer OR Pi USB host to ESP32 USB socket. Select the actual board connector, not the UART-chip name.",
+      "pending": "Data capability and Micro-USB/USB-C socket match; one power source."
+    },
+    {
+      "id": "BOM-15",
+      "selected_family": "Multimeter, UT33B+ candidate",
+      "quantity_basis": "1",
+      "role": "Commissioning tool",
+      "connection": "Keep available for unpowered continuity and DC-voltage/polarity checks using the instrument manual.",
+      "pending": "Meter model, lead sockets and range. Never place current mode directly across a supply."
+    },
+    {
+      "id": "BOM-16",
+      "selected_family": "4.7k resistor",
+      "quantity_basis": "10 planned",
+      "role": "OneWire pull-up",
+      "connection": "Place one effective pull-up between DS18B20 DATA/GPIO4 and 3.3V if no suitable pull-up is already fitted.",
+      "pending": "Measure/identify resistor and existing module pull-ups."
+    },
+    {
+      "id": "BOM-17",
+      "selected_family": "Matching DC barrel terminal connectors",
+      "quantity_basis": "2 pairs planned",
+      "role": "Motor branch interface",
+      "connection": "Reserve for the adapter and reviewed DC distribution; mark actual polarity and add strain relief.",
+      "pending": "5.5x2.1mm is a target, not confirmed physical fit/current rating."
+    },
+    {
+      "id": "BOM-18",
+      "selected_family": "Inline holder and selected fuse",
+      "quantity_basis": "1 set",
+      "role": "Motor branch protection",
+      "connection": "Location and fuse are assigned with the final source/wire/driver design; keep disconnected now.",
+      "pending": "No fuse value assigned. Existing 10-40A assortment is not approved for this bench."
+    },
+    {
+      "id": "BOM-19",
+      "selected_family": "DC-rated maintained isolation switch",
+      "quantity_basis": "1",
+      "role": "Independent motor disconnect",
+      "connection": "Mount accessible; final DC contacts/polarity join the reviewed motor branch only.",
+      "pending": "DC load/startup rating; an ordinary inline switch is not a certified emergency stop."
+    },
+    {
+      "id": "BOM-20",
+      "selected_family": "Fixed rotating-parts guard",
+      "quantity_basis": "1",
+      "role": "Physical protection",
+      "connection": "Secure to the bench around actual rotating parts with suitable clearance and service access.",
+      "pending": "Guard dimensions/fixings and fit; no electronic guard-status feedback exists."
+    },
+    {
+      "id": "BOM-21",
+      "selected_family": "TB6612FNG candidate driver module",
+      "quantity_basis": "1",
+      "role": "Local motor drive",
+      "connection": "Keep VM, motor outputs and logic controls unassigned until board schematic and motor-current compatibility are established.",
+      "pending": "Exact module/continuous current/peak duration/thermal limits and startup-disable control. Current firmware has no driver control."
+    },
+    {
+      "id": "BOM-22",
+      "selected_family": "Driver-matched capacitors/suppression",
+      "quantity_basis": "1 matched set",
+      "role": "Transient/decoupling network",
+      "connection": "Install only the network specified by the final driver board/reference circuit.",
+      "pending": "Capacitor and TVS values/ratings/topology pending; no default diode across a reversible H-bridge motor."
+    },
+    {
+      "id": "BOM-23",
+      "selected_family": "Copper power wire/ferrules",
+      "quantity_basis": "1 kit",
+      "role": "Motor power terminations",
+      "connection": "Cut/terminate only after gauge, length, fuse and terminal sizes are coordinated.",
+      "pending": "18AWG is a candidate, not an approved size for unknown current/length."
+    },
+    {
+      "id": "BOM-24",
+      "selected_family": "Rated insulated terminal blocks",
+      "quantity_basis": "1 set",
+      "role": "DC distribution",
+      "connection": "Mount and label positive/return points for the final motor circuit; keep motor return separate from signal-return routing.",
+      "pending": "Exact current/wire/voltage ratings, covers and termination instructions."
+    },
+    {
+      "id": "BOM-25",
+      "selected_family": "Matched bracket/base/fixings",
+      "quantity_basis": "1 set",
+      "role": "Mechanical bench",
+      "connection": "Secure motor on a stable non-slip base using its actual mounting pattern and permissible screw depth.",
+      "pending": "Generic 25mm/370 names do not establish screw fit or depth."
+    },
+    {
+      "id": "BOM-26",
+      "selected_family": "12V-to-5V buck",
+      "quantity_basis": "Only if needed",
+      "role": "Optional auxiliary power",
+      "connection": "Leave disconnected unless an identified 5V accessory needs it and its branch is designed.",
+      "pending": "Not Pi default power; no parallel USB/buck power to ESP32."
+    },
+    {
+      "id": "BOM-27",
+      "selected_family": "Bidirectional I2C level shifter",
+      "quantity_basis": "Only if needed",
+      "role": "Optional logic translation",
+      "connection": "Leave out of a verified 3.3V bus. Add only for a documented incompatible peripheral and reviewed pull-ups.",
+      "pending": "Peripheral voltage and translator schematic."
+    },
+    {
+      "id": "BOM-28",
+      "selected_family": "3.3V USB-to-TTL adapter",
+      "quantity_basis": "Only if needed",
+      "role": "Optional diagnostics",
+      "connection": "Leave out while ESP32 onboard USB-UART is used. A separate UART setup requires verified 3.3V levels and one power source.",
+      "pending": "Not RS-232; no assumed VCC connection or simultaneous driving of the same UART."
+    },
+    {
+      "id": "BOM-29",
+      "selected_family": "12V DC inline power meter",
+      "quantity_basis": "Only if needed",
+      "role": "Optional motor-input reference",
+      "connection": "Place only in its documented compatible DC measurement location after branch ratings/terminals are approved.",
+      "pending": "Latest source specifies a DC meter, not an arbitrary USB-only meter."
+    },
+    {
+      "id": "BOM-30",
+      "selected_family": "Spare ESP32 + matched sensors",
+      "quantity_basis": "1 spare set",
+      "role": "Cold spare",
+      "connection": "Label and store disconnected; commission separately when replacing a part.",
+      "pending": "Record actual spare identity; do not parallel-connect spares or duplicate an active device identity."
+    }
+  ],
+  "source_hash_basis": "UTF-8 CSV with LF newlines",
+  "sensor_map_sha256": "8d4cfccbf7078a17d9496b8c6818eb656cf8bb3205fdf9bad33469fa2147daf1"
+}

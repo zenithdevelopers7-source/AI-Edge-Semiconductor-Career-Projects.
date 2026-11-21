@@ -1,0 +1,1 @@
+{"asset_id":"fixture-motor","board_reference":"synthetic-fixture","calibration":"not_verified","configuration_ref":"fixture-only","device_id":"fixture-esp32","physical_verification":"unverified","profile":"edgeops.serial-attachment.v1","serial_port":"NOT-CONNECTED","site_id":"synthetic-lab","source_type":"synthetic","transport":"usb-serial","v1_device_id":"motor-001"}

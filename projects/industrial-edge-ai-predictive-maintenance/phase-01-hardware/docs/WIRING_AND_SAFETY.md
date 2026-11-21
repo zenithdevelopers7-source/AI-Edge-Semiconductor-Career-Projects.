@@ -21,3 +21,7 @@
 
 ## Validation record template
 Record exact module manufacturers/part numbers, photos, wiring diagram, measured voltages, detected I2C addresses, sensor mounting, ambient conditions, test date, sampling interval, valid-record rate, sequence gaps, and observed limitations.
+
+## Physical preparation pack
+
+Use [the 30-product physical preparation pack](physical-connection-pack/README.md) and its printable guide/connection matrix. It is based on the newer GitHub sourcing table, preserves the sensor-only pin map and explicitly identifies motor/driver ratings that are still unresolved. It does not assign a motor-power circuit or commission equipment.

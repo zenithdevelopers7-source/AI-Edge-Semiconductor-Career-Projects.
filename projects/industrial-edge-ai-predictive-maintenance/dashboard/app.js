@@ -23,20 +23,20 @@ const alerts = [
   {id:"AL-2403",severity:"watch",title:"Current deviation above demo threshold",detail:"Cooling Fan B · Processing Hall",time:"11:35 · synthetic event",ack:false}
 ];
 const signalSeries = {
-  vibration:{label:"Vibration",unit:"m/s²",values:[2.1,2.3,2.0,2.5,2.9,2.6,3.0,3.2,2.8,3.5,3.9,3.7],color:"#48d4b0"},
-  temperature:{label:"Temperature",unit:"°C",values:[27.2,27.4,28,28.3,28.5,29,29.1,29.5,30.2,30.7,31.0,31.5],color:"#f4ba62"},
-  current:{label:"Current",unit:"A",values:[.42,.41,.45,.48,.44,.5,.46,.54,.52,.56,.55,.59],color:"#69adfb"},
-  voltage:{label:"Voltage",unit:"V",values:[12.1,12.0,12.2,12.1,11.9,12.0,12.1,11.9,12.0,11.8,11.9,12.0],color:"#c4a3ff"}
+  vibration:{label:"Vibration",unit:"m/s²",values:[2.1,2.3,2.0,2.5,2.9,2.6,3.0,3.2,2.8,3.5,3.9,3.7],color:"#087b78"},
+  temperature:{label:"Temperature",unit:"°C",values:[27.2,27.4,28,28.3,28.5,29,29.1,29.5,30.2,30.7,31.0,31.5],color:"#a75b08"},
+  current:{label:"Current",unit:"A",values:[.42,.41,.45,.48,.44,.5,.46,.54,.52,.56,.55,.59],color:"#245bd6"},
+  voltage:{label:"Voltage",unit:"V",values:[12.1,12.0,12.2,12.1,11.9,12.0,12.1,11.9,12.0,11.8,11.9,12.0],color:"#7950bb"}
 };
 const headings = {
-  overview:["Industrial Command Center","Predictive maintenance architecture showcase across simulated equipment and hardware.","OVERVIEW / SYNTHETIC OPERATIONS"],
+  overview:["Fleet overview","Your fleet, review queue, and offline intelligence in one workspace.","OVERVIEW / SYNTHETIC OPERATIONS"],
   architecture:["Enterprise Architecture Explorer","Interactive system blueprint: device acquisition, mTLS delivery, edge validation, persistence, AI and human review.","ARCHITECTURE / LAB + DESIGN"],
   telemetry:["Telemetry explorer","Inspect synthetic vibration, temperature, voltage and current sensor signals.","Live telemetry"],
   assets:["Asset registry","Browse the synthetic equipment and demo health classifications.","Assets & devices"],
-  alerts:["Alert management","Review local demonstration events and browser-only acknowledgments.","Alerts"],
+  alerts:["Alert management","Track saved synthetic incident exercises and review demonstration alerts.","Alerts"],
   insights:["AI maintenance insights","Illustrative maintenance recommendations; no deployed predictive model.","AI insights"],
   hardware:["Hardware inventory","View the engineering catalog and component readiness without connecting to equipment.","Hardware inventory"],
-  maintenance:["Maintenance Planning","Demonstration work orders and human review workflows; no CMMS mutation.","MAINTENANCE / DEMO"],
+  maintenance:["Maintenance planning","Save and independently review local inspection plans for synthetic assets.","MAINTENANCE / LOCAL PLANNING"],
   governance:["Architecture & AI Governance","Review proposed governance, safety gates, and responsible AI controls.","GOVERNANCE / ARCHITECTURE"],
   reports:["Reports & Executive Analytics","Export synthetic architecture snapshots, not operational performance data.","REPORTS / SYNTHETIC"],
   settings:["Workspace Settings","Review the boundaries of this local development environment.","SETTINGS / LOCAL"],
@@ -54,11 +54,13 @@ function healthCell(item){
   return '<span class="health-meter"><span class="bar-track"><span class="bar-fill" style="display:block;background:'+color+';width:'+item.health+'%"></span></span><strong>'+item.health+'</strong></span>';
 }
 function renderAssets(){
-  $("attention-assets").innerHTML=assets.filter(a=>a.status!=="nominal").map(a=>'<tr><td><strong>'+escapeText(a.name)+'</strong><br><small>'+escapeText(a.id)+'</small></td><td>'+escapeText(a.area)+'</td><td>'+healthCell(a)+'</td><td>'+statusTag(a.status)+'</td></tr>').join("");
+  $("attention-assets").innerHTML=assets.filter(a=>a.status!=="nominal").map(a=>'<tr><td><button type="button" class="asset-link" data-open-asset="'+escapeText(a.id)+'">'+escapeText(a.name)+'</button><br><small>'+escapeText(a.id)+'</small></td><td>'+escapeText(a.area)+'</td><td>'+healthCell(a)+'</td><td>'+statusTag(a.status)+'</td></tr>').join("");
   const filter=$("asset-filter")?.value||"all", term=($("asset-search")?.value||"").trim().toLowerCase();
   const visible=assets.filter(a=>(filter==="all"||a.status===filter)&&[a.id,a.name,a.area,a.type].some(v=>v.toLowerCase().includes(term)));
+  const sort=$("asset-sort")?.value||"priority";
+  if(sort==="name"||sort==="area") visible.sort((a,b)=>a[sort].localeCompare(b[sort]));
   if($("asset-result-count"))$("asset-result-count").textContent=visible.length+" of "+assets.length+" assets";
-  $("all-assets").innerHTML=visible.length?visible.map(a=>'<tr><td><strong>'+escapeText(a.name)+'</strong><br><small>'+escapeText(a.id)+'</small></td><td>'+escapeText(a.area)+'</td><td>'+escapeText(a.type)+'</td><td>'+healthCell(a)+'</td><td>'+statusTag(a.status)+'</td></tr>').join(""):'<tr><td colspan="5" class="empty-state">No demo assets match this search and status filter.</td></tr>';
+  $("all-assets").innerHTML=visible.length?visible.map(a=>'<tr><td><button type="button" class="asset-link" data-open-asset="'+escapeText(a.id)+'">'+escapeText(a.name)+'</button><br><small>'+escapeText(a.id)+'</small></td><td>'+escapeText(a.area)+'</td><td>'+escapeText(a.type)+'</td><td>'+healthCell(a)+'</td><td>'+statusTag(a.status)+'</td></tr>').join(""):'<tr><td colspan="5" class="empty-state">No demo assets match this search and status filter.</td></tr>';
 }
 function alertMarkup(a,withButton){
   return '<div class="alert-item"><div class="alert-icon '+a.severity+'" aria-hidden="true">'+(a.severity==="critical"?"!":"↗")+'</div><div class="alert-body"><div class="alert-title">'+escapeText(a.title)+'</div><p class="alert-description">'+escapeText(a.detail)+'</p><span class="alert-time">'+escapeText(a.time)+'</span></div>'+(withButton?'<button class="ack-btn" data-ack="'+escapeText(a.id)+'"'+(a.ack?' disabled':'')+'>'+(a.ack?'Acknowledged':'Acknowledge')+'</button>':'')+'</div>';
@@ -75,7 +77,9 @@ function renderAlerts(){
 }
 function plot(svgId,signal){
   const series=signalSeries[signal], svg=$(svgId); if(!series||!svg)return;
-  const width=650,height=250,left=44,right=12,top=14,bottom=20;
+  const bounds=svg.getBoundingClientRect();
+  const width=Math.max(220,Math.round(bounds.width)||650),height=Math.max(140,Math.round(bounds.height)||250),left=44,right=12,top=14,bottom=20;
+  svg.setAttribute("viewBox","0 0 "+width+" "+height);
   const min=Math.min(...series.values), max=Math.max(...series.values),margin=(max-min)*.23||1;
   const low=min-margin,high=max+margin;
   const x=i=>left+i*(width-left-right)/(series.values.length-1),y=v=>top+(high-v)*(height-top-bottom)/(high-low);
@@ -149,6 +153,8 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("export-btn").addEventListener("click",exportSnapshot);
   const current=window.location.hash.slice(1);
   if(headings[current])navigate(current,false);
+  const chartResize=new ResizeObserver(entries=>{for(const entry of entries){if(entry.contentRect.width>0&&entry.contentRect.height>0)plot(entry.target.id,$(entry.target.id==="trend-chart"?"signal-select":"signal-select-secondary").value);}});
+  ["trend-chart","telemetry-chart"].forEach(id=>chartResize.observe($(id)));
   window.addEventListener("popstate",()=>navigate(headings[window.location.hash.slice(1)]?window.location.hash.slice(1):"overview",false));
   window.addEventListener("hashchange",()=>navigate(headings[window.location.hash.slice(1)]?window.location.hash.slice(1):"overview",false));
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("sidebar").classList.remove("open");$("menu-toggle").setAttribute("aria-expanded","false");}});
@@ -188,7 +194,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const section=Object.keys(headings).find(key=>key.includes(q)||headings[key][0].toLowerCase().includes(q));
     if(section){navigate(section);showToast("Opened "+headings[section][0]);return}
     const asset=assets.find(a=>[a.id,a.name,a.area,a.type].some(value=>value.toLowerCase().includes(q)));
-    if(asset){navigate("assets");showToast("Found demo asset: "+asset.name);return}
+    if(asset){$("asset-search").value=q;$("asset-filter").value="all";renderAssets();navigate("assets");showToast("Found demo asset: "+asset.name);return}
     const alert=alerts.find(a=>[a.id,a.title,a.detail].some(value=>value.toLowerCase().includes(q)));
     if(alert){navigate("alerts");showToast("Found synthetic alert: "+alert.title);return}
     showToast("No matching simulated asset, alert or section.");

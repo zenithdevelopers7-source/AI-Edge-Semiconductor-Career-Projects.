@@ -4,10 +4,14 @@ on:
   push:
     paths:
       - "projects/industrial-edge-ai-predictive-maintenance/dashboard/**"
+      - "projects/industrial-edge-ai-predictive-maintenance/phase-01-hardware/**"
+      - "projects/industrial-edge-ai-predictive-maintenance/enterprise-architecture/contracts/**"
       - ".github/workflows/edgeops-dashboard-ci.yml"
   pull_request:
     paths:
       - "projects/industrial-edge-ai-predictive-maintenance/dashboard/**"
+      - "projects/industrial-edge-ai-predictive-maintenance/phase-01-hardware/**"
+      - "projects/industrial-edge-ai-predictive-maintenance/enterprise-architecture/contracts/**"
       - ".github/workflows/edgeops-dashboard-ci.yml"
   workflow_dispatch:
 
@@ -15,6 +19,40 @@ permissions:
   contents: read
 
 jobs:
+  esp32-firmware-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: projects/industrial-edge-ai-predictive-maintenance/phase-01-hardware
+    env:
+      PLATFORMIO_CORE_DIR: ${{ github.workspace }}/.local-platformio-build
+      PLATFORMIO_SETTING_ENABLE_TELEMETRY: "No"
+      PLATFORMIO_DISABLE_UPGRADE_CHECK: "true"
+      PLATFORMIO_RUN_JOBS: "2"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install fixed build tool
+        run: python -m pip install -r requirements-build.txt
+      - name: Compile existing ESP32 target (no upload)
+        run: python -m platformio run --project-dir firmware --environment esp32dev
+      - name: Record build artifacts (not hardware acceptance)
+        run: python scripts/record_firmware_build.py
+      - name: Retain firmware build evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: edgeops-esp32-compile-only
+          path: |
+            projects/industrial-edge-ai-predictive-maintenance/phase-01-hardware/firmware/build-evidence.json
+            projects/industrial-edge-ai-predictive-maintenance/phase-01-hardware/firmware/.pio/build/esp32dev/firmware.bin
+            projects/industrial-edge-ai-predictive-maintenance/phase-01-hardware/firmware/.pio/build/esp32dev/firmware.elf
+            projects/industrial-edge-ai-predictive-maintenance/phase-01-hardware/firmware/.pio/build/esp32dev/bootloader.bin
+            projects/industrial-edge-ai-predictive-maintenance/phase-01-hardware/firmware/.pio/build/esp32dev/partitions.bin
+          if-no-files-found: error
+          retention-days: 14
   dashboard-unit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -32,5 +70,41 @@ jobs:
         run: python -m unittest discover -s tests -p test_structure.py -v
       - name: Authentication and API tests
         run: python -m unittest discover -s tests -p test_server.py -v
+      - name: Local team administration and credential-boundary checks
+        run: |
+          python -m unittest discover -s tests -p test_team_accounts.py -v
+          python -m unittest discover -s tests -p test_password_rotation.py -v
+      - name: Maintenance planning authorization and revision checks
+        run: |
+          python -m unittest discover -s tests -p test_maintenance_requests.py -v
+          python -m unittest discover -s tests -p test_maintenance_exercises.py -v
+      - name: Synthetic incident lifecycle, permissions and recovery checks
+        run: |
+          python -m unittest discover -s tests -p test_incidents.py -v
+          python -m unittest discover -s tests -p test_incident_assignment.py -v
+          python -m unittest discover -s tests -p test_incident_followups.py -v
+          python -m unittest discover -s tests -p test_incident_investigation.py -v
+          python -m unittest discover -s tests -p test_observation_incidents.py -v
+          python -m unittest discover -s tests -p test_observation_attachments.py -v
+          python -m unittest discover -s tests -p test_incident_triage.py -v
+          python -m unittest discover -s tests -p test_incident_queue_summary.py -v
+          python -m unittest discover -s tests -p test_incident_planning.py -v
+      - name: Complete readiness register and acceptance boundary checks
+        run: python -m unittest discover -s tests -p test_production_readiness.py -v
+      - name: Request boundaries, service observations and recovery drills
+        run: |
+          python -m unittest discover -s tests -p test_physical_build.py -v
+          python -m unittest discover -s tests -p test_observation_queries.py -v
+          python -m unittest discover -s tests -p test_delivery.py -v
+          python -m unittest discover -s tests -p test_delivery_history.py -v
+          python -m unittest discover -s tests -p test_delivery_capacity.py -v
+          python -m unittest discover -s tests -p test_delivery_timing.py -v
+          python -m unittest discover -s tests -p test_acquisition_registry.py -v
+          python -m unittest discover -s tests -p test_operations.py -v
+          python -m unittest discover -s tests -p test_recovery.py -v
       - name: Python syntax checks
         run: python -m compileall -q server.py tests
+      - name: Offline serial capture compatibility checks (synthetic fixtures)
+        run: |
+          python -m pip install -r ../phase-01-hardware/tests/requirements.txt
+          python -m unittest discover -s ../phase-01-hardware/tests -v

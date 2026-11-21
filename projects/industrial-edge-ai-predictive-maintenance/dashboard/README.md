@@ -1,349 +1,84 @@
-# EDGEOPS — Industrial Intelligence Platform
+# EDGEOPS industrial monitoring workspace
 
-**Status: production-oriented development foundation, NOT production-ready.** This directory now includes a responsive sign-in page, authenticated Python API, industrial dashboard UI, a proposed 30-slot hardware catalog, local audit records, and a safe optional Git sync workflow.
+Status: authenticated local development platform. Hardware will be connected later. This is not an accepted industrial production deployment.
 
-**Previous verification:** The enterprise-architecture laboratory phases EA-23 through EA-31 have 132 tests reported passed on the user's Windows computer. Dashboard backend tests and visual browser tests are **new and have not yet been executed in that environment**.
+The dashboard provides 18 workspaces plus sign-in. Working local services include authenticated sessions, CSRF, audit, a 30-category planning catalog, a synthetic telemetry ledger, verified offline experiments/comparisons, independent report review, saved maintenance planning and the full 53-criterion readiness evidence register. Equipment cards/charts and incident examples remain synthetic; profile previews never change account permissions.
 
-## High-level system
+## Current documentation
 
-- Frontend: HTML5, responsive custom CSS, vanilla JavaScript, SVG telemetry charts.
-- Backend: FastAPI with PBKDF2-HMAC-SHA256 credential hashing, an eight-hour server-side opaque session stored by SHA-256 hash, same-site cookies, per-session double-submit CSRF validation and basic security headers.
-- Development database: SQLite stores users, session metadata and local audit records. Existing EA-30 SQLite telemetry data is **not automatically linked**.
-- Hardware planning: read-only inventory with 30 catalog slots; 14 known names, 16 unconfirmed. No real physical device is marked connected or purchased.
-- Application controls: no equipment actuator commands, no live production telemetry, no model training/inference, no critical control path.
-- Authentication: a single explicit local bootstrap admin, never a default password; this starter is not enterprise SSO/OIDC.
+- [Production design and staged implementation](../production-design/README.md)
+- [Current functionality and boundaries](PRODUCT_WORKSPACE.md)
+- [Fixed 30-product physical build view](PHYSICAL_BUILD_VIEW.md)
+- [Synthetic acquisition bindings and observation preflight](ACQUISITION_FOUNDATION.md)
+- [Durable synthetic delivery, receipts and worker](DURABLE_DELIVERY.md)
+- [Persisted telemetry, source quality and age semantics](PERSISTED_TELEMETRY.md)
+- [Production gap audit and next implementation sequence](SYSTEM_AUDIT.md)
+- [Backup, verification and restoration runbook](RECOVERY.md)
+- [Maintenance planning and authority](MAINTENANCE_PLANNING.md)
+- [All 53 readiness criteria and acceptance conditions](PRODUCTION_READINESS.md)
+- [Current visual system and readability](THEME.md)
 
-## Screens
+The superseded accumulated setup guide is preserved in [history](history/README-before-operations-audit.md), clearly separated from current instructions. Historical test evidence remains historical; it is not a current deployment certificate.
 
-1. Attractive responsive **Sign In** screen: branded industrial artwork, account authentication and visible local-development scope.
-2. **Overview**: 12 synthetic demonstration asset cards, performance counters, health distribution and alerts.
-3. **Live telemetry**: clearly labeled synthetic vibration, temperature, current and voltage trends.
-4. **Assets**: sample asset table and synthetic health status.
-5. **Alerts**: browser-local demonstration alert acknowledgment. A separate authenticated backend endpoint can audit *demo* acknowledgments; it does not change real alarm state.
-6. **AI insights**: illustrative human-readable cards, explicitly NOT trained AI model output.
-7. **Hardware inventory**: all 30 planning slots, with 14 named items and 16 unconfirmed; secure read-only same-origin API.
-8. **Security & audit**: status/gates summary; protected API audit endpoint available to admin/auditor, not yet a complete audit UI.
-9. **Account session**: authenticated session details, sign-out with CSRF protection.
+## Local setup and access
 
-## Run from Cursor / VS Code on Windows
+The existing installation uses the user's Windows checkout and http://127.0.0.1:8877/app. If it is already running, refresh that page; do not start a second server or replace the existing database/password.
 
-Open the existing Git checkout in Cursor or VS Code, then run **PowerShell** in the integrated terminal:
+For a new checkout, use Python 3.12 or newer and create a local virtual environment from this dashboard folder:
 
-~~~powershell
-cd "C:\Users\Gaming PC i9 3080\edgeops-workspace\projects\industrial-edge-ai-predictive-maintenance\dashboard"
-git pull --ff-only origin main
+```powershell
 py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-~~~
+```
 
-Create a strong local development password (do **not** save it in source code, screenshots or Git). The following prompt reads the password securely without displaying it in your terminal:
-
-~~~powershell
-$env:EDGEOPS_ADMIN_EMAIL = "admin@example.invalid"
-$secure = Read-Host "New EDGEOPS local admin password (14+ chars)" -AsSecureString
-$handle = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
-try {
-  $env:EDGEOPS_ADMIN_PASSWORD = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($handle)
-} finally {
-  [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($handle)
-  Remove-Variable secure
-}
-.\.venv\Scripts\python.exe -m uvicorn server:app --host 127.0.0.1 --port 8765
-~~~
-
-**Open:** http://127.0.0.1:8765/signin
-
-The first run creates the local admin and development database in the ignored `.local/` directory. Restarting the same database will not change the original admin password merely by changing the environment variables. Setting `EDGEOPS_HTTPS_ONLY=1` requires HTTPS (typically at an authenticated reverse proxy) or cookies will not work over HTTP. This setup is strictly localhost-only; do not bind 0.0.0.0 or expose the development server to the internet.
-
-**Verification from another terminal:**
-
-~~~powershell
-cd "C:\Users\Gaming PC i9 3080\edgeops-workspace\projects\industrial-edge-ai-predictive-maintenance\dashboard"
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_server.py" -v
-~~~
-
-This suite has **12 authored API tests**: redirects, login rejection, session, catalog, no static server-source access, CSRF, logout, audit, safe state and synthetic-only acknowledgment.
-
-**Static checks:** The Phase 1 static structure test has been updated for the authenticated server asset routes. Both source structure and API tests are configured in GitHub Actions but remain unverified until their actual run results are inspected.
-
-## GitHub + Cursor/VS Code automatic synchronization
-
-**Git principle:** Editing and saving a file locally does *not* automatically update GitHub. Saving, staging, committing and pushing are separate operations. Automatically pushing every keystroke to `main` would risk publishing untested code and secrets.
-
-Recommended human-review workflow:
-
-~~~powershell
-git status
-git diff -- projects/industrial-edge-ai-predictive-maintenance/dashboard
-git add projects/industrial-edge-ai-predictive-maintenance/dashboard
-git commit -m "feat(edgeops): improve dashboard"
-git push origin main
-~~~
-
-These commands are written for running from the **repository root**. For simple day-to-day work from this dashboard folder use `git add index.html styles.css app.js signin.html signin.css signin.js server.py` with only the files you actually reviewed; do not stage local `.env` or `.local/` data.
-
-**Optional continuous auto-commit and push:** Only if you explicitly enable it, `sync-dashboard.ps1` can watch for edits every 20 seconds, commit an allowlist of dashboard source files and push to a **separate `dashboard-live-edit` branch** (never directly to `main`). Before starting:
-
-~~~powershell
-git fetch origin
-git switch -c dashboard-live-edit
-git push -u origin dashboard-live-edit
-.\sync-dashboard.ps1 -Watch -IntervalSeconds 20
-~~~
-
-This is a convenience workflow, not CI. Stop with Ctrl+C. It refuses unrelated staged files and aborts when push fails. **Review the diff and run tests before merging that branch into main.** Do not save tokens or secrets in source files, since even a temporary commit can expose them remotely. The monitor uses the existing Git credentials configured in Cursor or VS Code; do not paste GitHub personal access tokens into scripts.
-
-## What remains before a truthful production claim
-
-| Area | Current implementation | Required before production |
-|---|---|---|
-| Sign-in | Local bootstrap admin and session cookies | Enterprise identity (OIDC/SSO), MFA, provisioning, recovery and account policies |
-| Authorization | Fixed local roles for read-only/audit endpoints | Tenant/site/asset authorization and policy integration |
-| UI | Responsive code committed | Actual multi-browser visual QA, accessibility audit and UX acceptance |
-| Data | Synthetic fixtures and isolated SQLite auth/audit | PostgreSQL/TimescaleDB, migrations, retention, recovery, integrations |
-| MQTT | EA-31 localhost mTLS lab separate from dashboard | Durable retries/queue, proven delivery semantics, hardening, certificate lifecycle |
-| Analytics | Synthetic static charts | Live read-only API with provenance, pagination and error states |
-| Predictive AI | Illustrative cards only | Trained/evaluated models, drift monitoring, calibrated explanations and human review |
-| Device operations | Proposed 30-slot catalog | Bill of materials approval, physical provisioning, certificates and calibration |
-| Security | Local CSRF, session and headers starter | Independent pen test, OIDC, distributed rate limiting, secure deployment, secrets manager, SIEM |
-| Safety | No actuator UI, G4b BLOCKING | Independent electrical safety/guard/E-stop approval before physical testing |
-| Reliability | Some EA-30/31 lab evidence | EA-32 spool/retry/dead-letter design and failure-injection proof |
-| Governance | Architecture and test documents | Change control, runbooks, disaster recovery tests, threat model sign-off |
-
-**Do not deploy this local starter as an internet-facing production identity service or connect real industrial equipment.**
-
-## Source
-
-- `signin.html`, `signin.css`, `signin.js`: login experience.
-- `index.html`, `styles.css`, `app.js`: existing multi-page dashboard.
-- `dashboard-auth.js`: authenticated inventory loading and logout.
-- `server.py`: local API, session storage, auth and audit.
-- `tests/test_server.py`: authored security/API tests; local execution pending.
-- `sync-dashboard.ps1`: opt-in Git sync for dedicated development branch.
-
-
-## Approved visual redesign — sign-in and executive command center
-
-**Design status:** Source implemented on `dashboard-live-edit`, awaiting browser screenshot/visual QA and an updated local test run. Not yet merged to `main` and not a production deployment.
-
-The approved dark command-center direction has been rebuilt with brighter text, electric cyan outlines, industrial midnight-blue surfaces and amber status/actions. Industrial machinery imagery is shipped as two original local SVG assets, `industrial-motor.svg` and `industrial-plant.svg`, both served through an explicit static allowlist. The source illustrations are stylized vector art, not photorealistic images or actual photographs of purchased hardware.
-
-### Sign-in layout
-
-- Full-width industrial illustration with overlaid synthetic sensor readouts and a distinct access card.
-- Local account login, show/hide password, optional remembered **email only** (not password), and explicit feedback for unconfigured SSO, recovery and public demo access.
-- Mobile responsive layout with keyboard focus treatments.
-- Corporate safety notice, demo provenance and readable accessible contrast.
-
-### Executive dashboard
-
-- Compact eleven-section navigation: Overview, Assets, Telemetry, AI Copilot, Inventory, Alerts, Maintenance, Security, Governance, Reports and Settings.
-- Five executive KPI fixtures (health, 30 planned hardware slots, alerts, model readiness and illustrative uptime).
-- Machine + sensor hero display, selectable sensor signal chart, alerts, activity, demonstration work queue and review-only quick actions.
-- Synthetic fleet distribution; equipment criticality; maintenance queue; pictorial hardware preview; governance/safety panel.
-- Functional read-only inventory API, alert browsing/ephemeral acknowledge, snapshot JSON export, session sign-out, section navigation and client-only asset/alert search.
-- No deceptive "30 connected devices", "deployed model" or production-risk statistics. The 30 component positions are **planning slots**, and only 14 component names are confirmed from the user's earlier requested inventory.
-
-### Preview on your Windows machine
-
-Because you have an opt-in auto-sync watcher on the development branch, press **Ctrl+C in the sync terminal before pulling** to avoid local/remote divergence during updates.
+For a fresh database only, set EDGEOPS_ADMIN_EMAIL and a unique EDGEOPS_ADMIN_PASSWORD of at least 14 characters through your local environment/secure terminal prompt. Never put real passwords in tracked files. The first configured administrator is created only when there are no users. Changing bootstrap variables does not reset an existing account. Existing installations must retain their configured EDGEOPS_DASHBOARD_DB and report paths.
 
 ```powershell
-cd "C:\Users\Gaming PC i9 3080\edgeops-workspace\projects\industrial-edge-ai-predictive-maintenance\dashboard"
-git status
-git pull --ff-only origin dashboard-live-edit
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_structure.py" -v
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_server.py" -v
+.\.venv\Scripts\python.exe -m uvicorn server:app --host 127.0.0.1 --port 8877
 ```
 
-Keep the preexisting Uvicorn development server running on localhost port 8877. Open:
+Keep this development server on loopback. HTTPS-only cookies require HTTPS; the environment example is documentation and is not automatically loaded as a secrets file. Production identity, managed credentials, TLS deployment and network isolation remain separate work.
 
-- http://127.0.0.1:8877/signin
-- http://127.0.0.1:8877/app (after authenticated sign-in)
+## Service observations
 
-With `--reload`, the server may restart due to Python source changes. **Use Ctrl+F5 to hard-refresh** CSS, JS and SVG assets as needed. In a separate terminal restart the opt-in watcher with `.\sync-dashboard.ps1 -Watch -IntervalSeconds 20` once the branch has been pulled and tested.
+Settings > Service checks & recovery shows the current data-store check, service uptime, available storage and source fingerprint. Admin/auditor accounts can refresh and export diagnostics; operators cannot access private diagnostics. Failed checks clear previous results and disable export until recovery.
 
-### Verification scope
+- GET /health/live: process response only, not hardware or production readiness.
+- GET /health/ready: minimal database/schema availability; returns 503 if unavailable.
+- GET /api/system/diagnostics: authenticated admin/auditor observations, bounded integrity check and record counts. No passwords, account names or local paths are returned.
 
-The dashboard is not pixel-identical to generated mockup images: the approved composition, contrast, features and colors have been translated into maintainable HTML/CSS/JS, with local vector machinery artwork rather than the mockup's photorealistic pixels. Source changes are committed to the GitHub branch, but no actual browser screenshot or new test output has been verified yet. Do not count new checks as passed until the test log and UI are inspected.
+These checks cannot establish sensor freshness, model performance, accepted recovery targets or production availability. A healthy software probe never marks a readiness criterion accepted.
 
+## Saved synthetic incidents
 
-## Approved reference photographs (November 18)
+Persisted Telemetry can explicitly create an incident from a saved observation whose test-binding asset matches a dashboard asset. All six readings and declared quality/time/source identity are frozen with the case; no fault is detected automatically. Incidents can also retain up to 20 additional explicitly attached observations with reasons, exact asset/site checks and frozen evidence in history/export and planning context. Severity reviews preserve the original classification while recording the current decision and reason; the queue offers current-severity filtering and critical-first order. New linked planning drafts use current severity without rewriting earlier captured context. Saved incident details include a compact case summary, six keyboard section shortcuts and searchable/filterable history while preserving unsaved notes and complete exports. The Evidence section can compare two captured observations with quality-aware arithmetic differences and a separate read-only comparison export; values and original records remain unchanged. In-app draft protection warns before incident refresh/close/switch, intentional attachment cancellation or a save that would replace other unsaved form changes; Keep editing is the default. This does not autosave drafts or protect browser reload/tab closure. Alert center supports accountable ownership and scoped assigned-to-me views for enabled local accounts. Its investigation log retains progress, analysis and evidence-reference entries without changing the incident state, with exact retry protection after lost responses. It saves explicit incident exercises with acknowledgement, resolution evidence references, reopening, revision conflict checks and full history/export. Follow-up dates support upcoming, overdue and undated filters with explicit UTC entry, change reasons and revision history. Operators see records they created or are currently assigned; administrators and auditors can read all local exercises, with auditors read-only. Open or acknowledged incidents can create linked maintenance drafts with a frozen source revision and visible change warnings; approval still requires an independent reviewer. See [incident workflow and limits](INCIDENT_WORKFLOW.md). No incidents are seeded, and these records perform no live detection, escalation, equipment action or repair verification.
 
-The dashboard and login now reference two JPG images extracted/cropped from the user-approved EDGEOPS mockup:
-- `edgeops-motor-photo.jpg`: photographed industrial motor with existing cyan sensor overlays.
-- `edgeops-factory-backdrop.jpg`: wider factory environment used behind the sign-in showcase.
+## Maintenance documentation exercises
 
-**The binary JPGs must be copied into this directory locally**, then added and pushed from the user's checkout. They are not bundled in this branch by GitHub's text-file connector. Until installed, an error handler falls back to the original vector SVG illustrations. The backend serves both JPGs only through its static allowlist. This is intentional and avoids a broken image or a silent claim that the image was uploaded.
+Current independently approved plans now offer saved synthetic documentation exercises with notes, evidence references, independent exercise review, history/export and plan-revision guards. Exercise review never verifies physical work or authorizes equipment. See [maintenance exercise workflow and limits](MAINTENANCE_EXERCISES.md). No exercise records are seeded.
 
-Copy both files into `dashboard/` and in PowerShell:
-```powershell
-git add -- edgeops-motor-photo.jpg edgeops-factory-backdrop.jpg
-git commit -m "assets(edgeops): add approved industrial photographic artwork"
-git push origin dashboard-live-edit
-```
+## Local team accounts
 
-Run `python -m unittest discover -s tests -p "test_server.py" -v`, reload the page and check the browser's Network panel for 200 responses on both image URLs. Do not publish the entire reference screenshot as a user background with the simulated login form duplicated on top.
+Administrators can now manage local account creation, roles and access from Settings > Accounts for independent review. Administrators can also rotate a local password explicitly, with confirmation and session revocation. Every change requires the administrator password, a reason and a fresh revision; access changes revoke target sessions and protect the last active administrator. Existing credentials are preserved and no accounts are seeded. See [local account controls and remaining identity work](TEAM_ACCOUNTS.md).
 
+## Hardware arrival download
 
-## User experience refinement — readability & operational navigation
+Inventory > Your ordered hardware now offers **Download hardware arrival pack**. All signed-in read roles can download the fixed 30-product worksheet, conditional connection references, firmware source, V1 capture/V2 evidence tools, synthetic examples and their offline software tests. The authenticated ZIP endpoint is `/api/hardware/physical-plan/arrival-pack`; it exports only a fixed source-file list, never the dashboard database, credentials or local captures. A missing source or changed hardware matrix fails the whole download. File hashes support corruption checks, not source authentication or release acceptance.
 
-This revision keeps the existing locally authenticated architecture demo and prioritizes actual UX improvements over more imagery:
-- Increased text contrast, minimum body legibility and card section clarity.
-- Added interactive asset search and filter (all, critical, watch, nominal) with a visible result count.
-- Added demo alert filtering (all, open, acknowledged, critical).
-- Added `Focus` mode to expand the executive workspace for desktop review.
-- Mobile navigation now has a tap-to-close backdrop and Escape-key dismissal.
-- Improved form labels, field styling, chart captions and table scanning at smaller widths.
-- Kept synthetic metrics and local read-only safety disclosures visible.
+Start with `START-HERE.md` in the ZIP. The receipt worksheet is an offline copy; editing it does not update the dashboard or establish receipt, connection, calibration or production readiness. All 30 selected products retain their identities and existing roles.
 
-The changes are source commits on `dashboard-live-edit`; they are not automatically merged to `main`. Review after pulling the branch. Run:
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p test_structure.py -v
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p test_server.py -v
-```
-The refined UI should also be checked manually at desktop and mobile widths before merging.
-
-
-## Enterprise Architecture Explorer — next portfolio milestone
-
-Added an interactive **Architecture** navigation page that explains the system from end to end, with eight selectable stages:
-
-1. Guarded sensors and bench rig (planned)
-2. ESP32 telemetry acquisition (planned)
-3. MQTT mutual TLS transport (software-lab evidence)
-4. FastAPI edge validation gateway (software-lab evidence)
-5. SQLite local event persistence and replay (software-lab evidence)
-6. AI and agent orchestration (not deployed)
-7. Authenticated enterprise access API (local demo)
-8. Read-only executive operations console (local demo)
-
-Each stage can be inspected for: architectural purpose, technologies, security/safety boundary, failure handling, evidence/readiness and the key design decision. View controls also emphasize security boundaries or failure-handling considerations. Supporting panels distinguish verification history from deployment readiness.
-
-**Scope guardrails:** There is no live topology, no real hardware telemetry, no production SSO, no deployed AI model, and no actuator commands. MQTT/mTLS and replay claims refer to controlled local test fixtures, not operational certification.
-
-### Verify on Windows
-
-Pull `dashboard-live-edit` while the optional Git auto-sync watcher is paused. With the local authenticated Uvicorn server active on port 8877, open `http://127.0.0.1:8877/app`, choose **Architecture**, select each of the eight components, and verify the inspector updates. Try **Security boundaries** and **Failure handling**. Confirm keyboard focus, long-text overflow and mobile layout.
+## Verification
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p test_structure.py -v
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p test_server.py -v
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-This UI and its source checks establish a reviewable architecture portfolio narrative, not a deployable enterprise solution or independently audited safety system.
+The complete local run during this audit collected 132 cases: 108 passed and 24 Python-browser cases were skipped because the Python Playwright package is not installed locally. Four separate Node/Chromium suites passed against disposable databases: the complete 18-view workspace, readiness, maintenance planning and saved comparison review. Their screenshots and contrast reports are generated under the ignored .acceptance-captures folder. The workspace suite includes persisted test bindings, preflight/retirement and diagnostics refresh/export/outage recovery and text-size checks at five widths. GitHub workflows run their own current-head checks; consult actual results rather than inferring success from committed source.
 
+## GitHub updates
 
-## Interface completion hardening — reliability and navigation
+Current work is proposed in draft PR #2 from ui/production-workspace-20261119 into dashboard-live-edit. Saving a local file does not upload it. Review the diff and checks before merging. Do not blindly pull over uncommitted changes, run an auto-push watcher during an update, commit .local data, or overwrite the current accounts/reports/plans.
 
-Prior to further architectural phases, the signed-in dashboard now includes:
-- Visible local API health status and session identity/expiry in the Security & Audit tab
-- Authenticated, read-only local audit-event viewer with refresh and clear empty/error/access-denied states
-- Hardware inventory loading, retry, fail-closed empty state and metrics calculated from authenticated API results
-- 12-second bounded API requests and explicit session-expiry navigation to sign-in
-- Shareable navigation fragments (e.g. `/app#architecture`, `/app#security`) with Back/Forward support
-- Additional structural regression coverage for these interface behaviors
+## Production boundary
 
-**UI QA checklist:** sign in, verify Overview, all 12 sidebar sections, search, asset filters, alert filters and acknowledgment behavior, architecture tabs, report export, session/audit display, inventory refresh, sign out, and 390px/768px/1440px layouts. The local API health chip is not live plant health.
-
-**Readiness boundary:** this is UI implementation and static/API regression hardening, not production readiness. Real infrastructure, SaaS tenancy, live telemetry, model inference, industrial safety and deployment evidence remain separate later phases.
-
-
-## Synthetic telemetry persistence and offline evaluation foundation (November 2026)
-
-The development server now exposes a deliberately **synthetic-only** telemetry event ledger. It does not connect industrial sensors or deploy a predictive model.
-
-- `POST /api/synthetic-telemetry` accepts validated demo events only from the authenticated local admin, with the same CSRF protection as existing mutations. Each event **must** state `"provenance": "synthetic-demo"`; other provenance values are rejected.
-- `GET /api/synthetic-telemetry?asset_id=MTR-001&limit=100` returns persisted demo events for authenticated users, including provenance and explicit `model_deployed: false`.
-- `telemetry_store.py` persists events by unique `event_id` with stable-content SHA-256 fingerprints. Identical replays are idempotent; conflicting replays return HTTP 409.
-- Data is stored **separately** from account/session/audit data in the ignored `.local/synthetic-telemetry.sqlite3` file. Override with `EDGEOPS_SYNTHETIC_TELEMETRY_DB` only when explicitly using an isolated test database. The existing `.local/dashboard.sqlite3` is not migrated or rewritten.
-- `ml_evaluation.py` provides deterministic precision/recall/F1/confusion-matrix calculations for supplied **labeled** scores, and a chronological holdout split helper. This is an **evaluation foundation**, not a trained model or any accuracy result. Sensor fixtures alone cannot establish equipment-failure ground truth.
-- CI tests cover API authentication/CSRF, provenance rejection, range validation, idempotency, conflict responses, persisted reads, and offline evaluation. All CI tests use isolated temporary databases.
-
-Example event body (send only with an authenticated local session and a matching `x-edgeops-csrf` header):
-
-```json
-{
-  "event_id": "demo-mtr001-0001",
-  "asset_id": "MTR-001",
-  "captured_at": "2026-11-18T12:00:00+00:00",
-  "vibration_mm_s": 2.6,
-  "temperature_c": 41.2,
-  "current_a": 1.7,
-  "provenance": "synthetic-demo"
-}
-```
-
-**Next validation gates:** time-series replay/retention and ingestion throughput; labeled failure dataset provenance, split leakage controls, calibrated model evaluation, explainability, model registry, drift detection, and human review. None of these is claimed complete by the synthetic ledger.
-
-
-## Offline time-series feature engineering and baseline (November 2026)
-
-The next testable milestone adds **pure-Python offline analysis** without modifying the dashboard's live view, stored sessions, or protected telemetry APIs:
-
-- `time_series_features.py`: deterministic, per-asset trailing windows. Calculates vibration, temperature and current latest/mean/population standard deviation/change. Sorting is by timezone-aware event timestamp; future rows are excluded, and cross-asset mixing, missing/nonfinite data, duplicate event IDs/timestamps and non-synthetic provenance are rejected.
-- `offline_baseline.py`: reproducible **demonstration anomaly baseline** from explicitly labeled feature rows. Sorts chronologically into train, validation and holdout partitions; standardization parameters are fit on training only, alert threshold is chosen on validation only, and test metrics are computed only once on the chronological holdout. The anomaly score is **not a failure probability**.
-- `ml_evaluation.py`: reusable confusion-matrix, precision, recall, F1 and accuracy calculations for labeled evaluation data.
-
-The tests use deterministic **synthetic demonstration labels**, not measured industrial failures. No real-world predictive accuracy, calibrated failure probabilities, remaining useful life, model deployment or edge inference is established. The baseline stays offline and is never connected to hardware controls.
-
-Check locally with:
-
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p test_server.py -v
-```
-
-**Further work:** quality-controlled labeled failure histories, leakage-aware per-asset temporal splits with time-gap embargo, train-only feature scaling, baseline comparisons with scikit-learn, registered experiment artifacts, real validation metrics and industrial review gates.
-
-
-## Offline ML experiment registry (November 2026)
-
-`experiment_registry.py` adds content-addressed, **local-only** experiment tracking for the offline, synthetic-label baseline. Experiments include an immutable snapshot of explicitly labeled features, model parameters (JSON, **not pickle**), chronological split configuration, holdout metrics and SHA-256 artifact fingerprints. Identical inputs and configuration produce the same run ID; changes in configuration create a separate run.
-
-The registry writes into the exact folder supplied by the caller. Use a **new ignored directory** such as `.local/experiments`, not the authentication SQLite database. No API endpoint exposes experiment files, no cloud uploads occur and no model is deployed.
-
-Example from the dashboard folder, after preparing a list of labeled feature rows:
-
-```python
-from experiment_registry import register_experiment, verify_experiment, compare_experiments
-
-registered = register_experiment(labeled_synthetic_feature_rows, ".local/experiments")
-verified = verify_experiment(".local/experiments", registered["run_id"])
-comparison = compare_experiments(".local/experiments", [registered["run_id"]])
-```
-
-`labeled_synthetic_feature_rows` is deliberately not supplied as real failure evidence. The caller must provide valid explicitly labeled synthetic demonstration rows. The stored JSON model specification is **not** an approved deployable model, calibration artifact, or proof of predictive reliability.
-
-Verify using `python -m unittest discover -s tests -p test_experiment_registry.py -v`. Integrity tests detect overwritten files and inconsistent artifact hashes. A dedicated GitHub Actions workflow runs the same checks. Keep production or personal data out of these demo artifacts.
-
-**Future gates:** curated real labeled histories, dataset licensing/provenance, leakage/embargo review, model comparison with approved baselines, experiment approvals, security review, calibration and monitored deployment.
-
-### Run two reproducible synthetic experiments from PowerShell
-
-From the EDGEOPS dashboard folder, without starting a server:
-
-```powershell
-.\.venv\Scripts\python.exe run_offline_experiment.py --output ".local/experiments"
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p test_experiment_registry.py -v
-```
-
-The command prints two content-addressed run IDs and a comparison of **synthetic holdout** metrics. It writes immutable JSON dataset snapshots, model parameter specifications and experiment reports into `.local/experiments/{datasets,models,runs}`. Re-running with identical inputs does not create a new run. The demo does not train or deploy a supervised industrial failure model; the labels and telemetry are generated exclusively for repeatable software testing.
-
-
-## Fair-split scikit-learn baseline comparison and report viewer (November 2026)
-
-**Offline model comparison:** optional `requirements-ml.txt` provides NumPy and scikit-learn. `sklearn_comparison.py` evaluates a transparent standardized-deviation baseline alongside an independently fitted `LogisticRegression` pipeline. Both use the **same chronological train, validation and test partitions**. Scaling is fit only on training; each threshold is chosen on validation; the common test set is not used for fitting or threshold selection. Scores and metrics are for invented **synthetic labels** and must never be described as equipment-failure accuracy, calibration or a production model.
-
-Run locally from `dashboard/`:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-ml.txt
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p test_sklearn_comparison.py -v
-.\.venv\Scripts\python.exe run_sklearn_comparison.py
-```
-
-**Dashboard report viewer:** the existing `Reports` page now includes a read-only table populated by `GET /api/offline-experiments`. This endpoint requires a logged-in user and verifies SHA-256 dataset/model/run JSON artifacts from `.local/experiments` before returning **summary metrics only**. Corrupt or altered records are never displayed; the frontend shows an explicit empty/error state and a Retry control. It never returns raw dataset rows or enables model inference or equipment commands.
-
-To see the locally generated experiments, keep your authenticated local FastAPI server running on port 8877, open `http://127.0.0.1:8877/app#reports`, and select **Refresh experiments**. These previously saved registry experiments can have **different holdout sizes** and are not a fair model comparison. Use the separate scikit-learn CLI for equal-holdout offline comparisons. UI snapshot data remains illustrative.
-
-**Production blockers remain:** real labeled failure events, quality and leakage review, measured operational performance, model approval and deployment, physical hardware safeguards and independent security testing.
+A complete production claim requires the exact deployed scope, real measurements, implemented authoritative domain services, identity and delivery integrations, validated intelligence, recovery/load evidence and qualified acceptance. See SYSTEM_AUDIT.md for the actual remaining software and hardware work. Adding a dashboard page or marking evidence as accepted cannot substitute for these results.

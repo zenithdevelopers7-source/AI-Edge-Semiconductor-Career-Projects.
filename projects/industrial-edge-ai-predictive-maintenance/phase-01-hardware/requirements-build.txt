@@ -1,0 +1,2 @@
+# Isolated build tooling; not a dashboard runtime dependency.
+platformio==6.2.0

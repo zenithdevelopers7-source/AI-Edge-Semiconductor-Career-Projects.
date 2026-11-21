@@ -15,7 +15,7 @@ async function edgFetch(url, options={}) {
       window.location.assign("/signin");
       throw new Error("Session expired");
     }
-    if(!response.ok) throw new Error(response.status===403?"Access restricted for this account":"Service returned "+response.status);
+    if(!response.ok){const error=new Error(response.status===403?"Access restricted for this account":"Service returned "+response.status);error.status=response.status;throw error;}
     return response.json();
   } finally { clearTimeout(timer); }
 }
@@ -33,25 +33,30 @@ function edgConnection(state,label){
 }
 async function initializeHardware(){
   const button=edg("refresh-hardware");
-  if(button)button.disabled=true;
+  if(button){button.disabled=true;button.textContent="Checking catalog…";}
+  if(edg("hardware-metrics"))edg("hardware-metrics").textContent="";
+  if(edg("hardware-table"))edg("hardware-table").innerHTML='<tr><td colspan="5">Rechecking planning catalog…</td></tr>';
+  window.dispatchEvent(new CustomEvent("edgeops:hardware-state",{detail:{state:"loading"}}));
   edgFeedback("hardware-feedback","Loading planning inventory from the authenticated local API…","loading");
   try{
     const result=await edgFetch("/api/hardware");
     if(!Array.isArray(result.devices))throw new Error("Unexpected inventory response");
     const metrics=edg("hardware-metrics"),table=edg("hardware-table");
     const total=Number(result.slots_total)||result.devices.length;
-    const named=Number(result.confirmed_hardware_count)||0;
+    const named=Number(result.named_category_count)||0;
     const connected=result.devices.filter(item=>item.connected===true).length;
     if(metrics) metrics.innerHTML=[
-      [total,"Planned catalog slots"],[named,"Named components"],[Math.max(0,total-named),"Unconfirmed slots"],[connected,"Verified connected devices"]
-    ].map(([value,title])=>'<article class="metric"><div class="metric-label">'+safeText(title)+'</div><div class="metric-number">'+safeText(value)+'</div><div class="metric-foot">Planning inventory only</div></article>').join("");
-    if(table)table.innerHTML=result.devices.map(device=>'<tr><td><strong>'+safeText(device.id)+'</strong></td><td><strong>'+safeText(device.name)+'</strong></td><td>'+safeText(device.purpose)+'</td><td>'+safeText(device.category)+'</td><td><span class="status-tag watch">'+(device.connected?"Connected (API)":"Not connected")+'</span></td></tr>').join("");
-    edgFeedback("hardware-feedback",total+" planned slots · "+named+" named · "+connected+" connected according to local API. No physical connection verified.","ok");
+      [total,"Planning categories"],[result.devices.filter(item=>item.category==="sensor").length,"Sensor categories"],[result.ordered_count_user_reported??"Unknown","Ordered · user-reported"],[connected,"Verified connected devices"]
+    ].map(([value,title])=>'<article class="metric"><div class="metric-label">'+safeText(title)+'</div><div class="metric-number">'+safeText(value)+'</div><div class="metric-foot">Order report; physical state unverified</div></article>').join("");
+    if(table)table.innerHTML=result.devices.map(device=>'<tr><td><strong>'+safeText(device.id)+'</strong></td><td><strong>'+safeText(device.name)+'</strong></td><td>'+safeText(device.purpose)+'</td><td>'+safeText(device.category)+'</td><td><span class="status-tag watch">'+(device.connected?"Connected (API)":"Ordered · user-reported")+'</span></td></tr>').join("");
+    window.dispatchEvent(new CustomEvent("edgeops:hardware-state",{detail:{state:"ok",devices:result.devices}}));
+    edgFeedback("hardware-feedback",total+" planning categories · "+named+" named · "+connected+" connected according to local API. No physical connection verified.","ok");
   }catch(error){
     edgFeedback("hardware-feedback","Inventory unavailable: "+error.message+". Use Retry inventory to try again.","error");
     if(edg("hardware-table"))edg("hardware-table").innerHTML='<tr><td colspan="5" class="empty-state">Inventory could not be loaded. Previously displayed data is not reliable.</td></tr>';
     if(edg("hardware-metrics"))edg("hardware-metrics").textContent="";
-  }finally{if(button)button.disabled=false;}
+    window.dispatchEvent(new CustomEvent("edgeops:hardware-state",{detail:{state:"error"}}));
+  }finally{if(button){button.disabled=false;button.textContent=edg("hardware-feedback")?.dataset.state==="ok"?"Refresh catalog":"Retry inventory";}}
 }
 async function initializeAudit(){
   const button=edg("refresh-audit");
@@ -67,8 +72,6 @@ async function initializeAudit(){
     edgFeedback("audit-feedback",result.entries.length+" local authentication/audit events displayed. This is not an industrial event stream.","ok");
   }catch(error){
     edgFeedback("audit-feedback","Audit unavailable: "+error.message+".","error");
-    edgFeedback("experiment-feedback","Experiment reports unavailable until the local API reconnects.","error");
-    if(edg("experiment-entries"))edg("experiment-entries").innerHTML='<tr><td colspan="7" class="empty-state">Experiment reports unavailable until the local API reconnects.</td></tr>';
     if(edg("audit-entries"))edg("audit-entries").innerHTML='<tr><td colspan="4" class="empty-state">Audit history unavailable. Check permissions or retry.</td></tr>';
   }finally{if(button)button.disabled=false;}
 }
@@ -96,6 +99,8 @@ async function initializeExperiments(){
 
 function edgSession(me){
   edg("account-label").textContent=me.email||"Authenticated user";
+  const initials=String(me.email||"EU").split("@")[0].slice(0,2).toUpperCase();
+  document.querySelectorAll(".avatar,.top-avatar").forEach(node=>node.textContent=initials);
   if(edg("session-user"))edg("session-user").textContent=me.email||"Unavailable";
   if(edg("session-role"))edg("session-role").textContent=me.role||"Unavailable";
   if(edg("session-expiry")){
@@ -130,6 +135,7 @@ async function edgCheckConnection(){
     if(edg("hardware-table"))edg("hardware-table").innerHTML='<tr><td colspan="5" class="empty-state">Inventory unavailable until the local API reconnects.</td></tr>';
     if(edg("hardware-metrics"))edg("hardware-metrics").textContent="";
     if(edg("audit-entries"))edg("audit-entries").innerHTML='<tr><td colspan="4" class="empty-state">Audit history unavailable until the local API reconnects.</td></tr>';
+    window.dispatchEvent(new CustomEvent("edgeops:hardware-state",{detail:{state:"error"}}));
   }finally{if(retry)retry.disabled=false;}
 }
 

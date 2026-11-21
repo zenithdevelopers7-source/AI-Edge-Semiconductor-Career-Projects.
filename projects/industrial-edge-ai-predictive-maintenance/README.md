@@ -1,7 +1,9 @@
 # EDGEOPS — Industrial Edge AI Predictive Maintenance & Autonomous Operations
 
+> **Consolidated production design — 19 November 2026:** Start with the [complete production system design baseline](production-design/README.md). It reconciles all 48 existing project text documents, maps all 30 planned hardware categories, and specifies the target contracts, services, workflows and acceptance path. The current local dashboard is an authenticated development prototype; hardware commissioning and production acceptance are not established. Older status statements below describe earlier source snapshots.
+
 > **Engineering portfolio project | Architecture and implementation roadmap | Demonstration UI**  
-> **Status:** Documentation and initial ESP32 starter code exist. The dashboard is a simulated frontend prototype. A validated end-to-end hardware-to-cloud deployment has **not** yet been demonstrated.
+> **Status:** The local dashboard has authenticated accounts, verified offline experiment reports and a responsive product workspace. Equipment views remain simulated. A validated end-to-end hardware-to-cloud deployment has **not** yet been demonstrated.
 
 EDGEOPS is a proposed end-to-end industrial condition-monitoring platform that combines **low-voltage sensors, ESP32 firmware, MQTT messaging, Raspberry Pi edge inference, ONNX anomaly detection, FastAPI, PostgreSQL/TimescaleDB, a monitoring dashboard, AI-assisted maintenance guidance, and human-approved work orders**.
 

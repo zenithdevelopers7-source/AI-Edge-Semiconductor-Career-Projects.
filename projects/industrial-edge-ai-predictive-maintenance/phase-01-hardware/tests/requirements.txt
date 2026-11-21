@@ -1,0 +1,2 @@
+# Test-only contract validation; the offline adapter itself uses Python's standard library.
+jsonschema[format]==4.26.0

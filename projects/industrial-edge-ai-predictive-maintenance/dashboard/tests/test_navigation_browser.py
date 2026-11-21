@@ -1,4 +1,4 @@
-"""Real-browser acceptance for all 12 EDGEOPS navigation sections.
+"""Real-browser acceptance for all 18 EDGEOPS navigation sections.
 
 Runs against a disposable, isolated local FastAPI instance with a synthetic
 account and database. Never touches the operator's .local/dashboard.sqlite3.
@@ -32,6 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 STAGES = (
     "overview", "assets", "telemetry", "architecture", "insights", "hardware",
     "alerts", "maintenance", "security", "governance", "reports", "settings",
+    "devices", "models", "knowledge", "simulation", "profiles", "readiness",
 )
 
 
@@ -118,7 +119,7 @@ class NavigationBrowserAcceptance(unittest.TestCase):
         self.assertIn("#" + name, self.page.url)
         self.assertIn("EDGEOPS", self.page.title())
 
-    def test_01_all_twelve_pages_render_without_browser_errors(self):
+    def test_01_all_eighteen_pages_render_without_browser_errors(self):
         self.assertEqual(self.page.locator(".nav-item[data-page]").count(), len(STAGES))
         for name in STAGES:
             with self.subTest(section=name):

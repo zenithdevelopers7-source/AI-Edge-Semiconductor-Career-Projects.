@@ -1,0 +1,8 @@
+firmware/.pio/
+firmware/build-evidence.json
+scripts/__pycache__/
+tests/__pycache__/
+.build-env/
+.platformio-core/
+evidence/
+data/*.csv

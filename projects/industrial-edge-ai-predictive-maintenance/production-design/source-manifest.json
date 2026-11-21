@@ -1,0 +1,527 @@
+{
+  "review_date": "2026-11-19",
+  "scope": "EDGEOPS project only; portfolio root README additionally used as context",
+  "source_repository_head": "25f943a5a34aa1f70c9fcf8c7c595b2d265db140",
+  "local_uncommitted_dashboard_extensions_included": true,
+  "project_markdown_documents": [
+    {
+      "path": "dashboard/README.md",
+      "sha256": "fb082a14fed64d2b673d180b4b4cb852d1f3bb580595db25e654f588639de839",
+      "bytes": 31970,
+      "title": "EDGEOPS — Industrial Intelligence Platform",
+      "review_focus": "Current local application behavior, evidence and known production gaps"
+    },
+    {
+      "path": "dashboard/UI_UX_REVIEW.md",
+      "sha256": "949baa41311cb3058057e3931dc784f67e034c46a6a582db0966066529aa5c25",
+      "bytes": 6137,
+      "title": "EDGEOPS dashboard UI/UX review and implementation",
+      "review_focus": "Current local application behavior, evidence and known production gaps"
+    },
+    {
+      "path": "enterprise-architecture/01-ENTERPRISE-ARCHITECTURE-CHARTER.md",
+      "sha256": "ab57b5d67aa0dce5bcec5c5d14408e7bc2afa9205110918214e73dacfd4e2441",
+      "bytes": 5530,
+      "title": "EA-01 — Enterprise Architecture Charter and Business Requirements",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/02-SOLUTION-ARCHITECTURE.md",
+      "sha256": "8e2a257f0764aa42a67d9e87eb9c1df39846d855e84cbf24c6f4d4c2f35a36bc",
+      "bytes": 4418,
+      "title": "EA-02 — Solution Architecture and C4 Views",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/03-SYSTEM-INTEGRATION-DESIGN.md",
+      "sha256": "4bd606be16165063871b0290617c2c7941594303088303c2e0145aa0ce2120f2",
+      "bytes": 5211,
+      "title": "EA-03 — System, Data and Integration Design",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/04-AI-AND-AGENT-ARCHITECTURE.md",
+      "sha256": "6e5f4d8999440724476d1d72aef76023a0c935a732c1cc589ae1ba24f787436c",
+      "bytes": 4322,
+      "title": "EA-04 — Edge AI, Generative AI and Agentic Architecture",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/05-SECURITY-GOVERNANCE-AND-SAFETY.md",
+      "sha256": "637a68f4d7818b9f62723f4a5b0b6f2fc574ab68a032f13f170b95b66e6a3688",
+      "bytes": 5085,
+      "title": "EA-05 — Security, Governance, Privacy and Physical Safety",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/06-QUALITY-OPERATIONS-AND-COST.md",
+      "sha256": "492e5ca7f7c4c63024d91c05b9ae23882f87e8d015303df389ef9b65ce6a9153",
+      "bytes": 4499,
+      "title": "EA-06 — Nonfunctional Requirements, Operations and FinOps",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/07-ARCHITECTURE-DECISIONS.md",
+      "sha256": "dbac65ad701df4b193602dbe80f19566060d5b9136f57ce20569a40f88518166",
+      "bytes": 3701,
+      "title": "EA-07 — Architecture Decision Record (ADR) Register",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/08-DESIGN-REVIEWS-AND-READINESS.md",
+      "sha256": "faa69acdd910bb74b1106e81744d144bf44d05b053f7bbb02a7d9a5de9c35e15",
+      "bytes": 4396,
+      "title": "EA-08 — Architecture Review Gates and Implementation Readiness",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/09-REQUIREMENTS-TRACEABILITY-MATRIX.md",
+      "sha256": "c3f23490c3cabb96807f52ac7a8b4f04dc83e4094993d36bca890ea1873e0c58",
+      "bytes": 3572,
+      "title": "EA-09 — Requirements Traceability and Verification Matrix",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/10-API-EVENT-AND-CONTRACT-CATALOG.md",
+      "sha256": "4b97433186ee264890b3b502e30151376866393076325d530b2531b5414570d0",
+      "bytes": 4104,
+      "title": "EA-10 — API, MQTT and Event Contract Catalog",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/11-DATA-ARCHITECTURE-AND-GOVERNANCE.md",
+      "sha256": "92b0d74cb1f79de2a2537afa84823e3915dca41bcaee03c97ca1a907b637fcb2",
+      "bytes": 3442,
+      "title": "EA-11 — Data Architecture, Ownership and Governance",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/12-THREAT-MODEL-AND-RISK-REGISTER.md",
+      "sha256": "48a5d4f0c69f31b5ff5f0704df85ca8e4808e173cdd2cbfa14cc53fdc41e436f",
+      "bytes": 4016,
+      "title": "EA-12 — Threat Model, Risk Register and Treatment Plan",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/13-AI-EVALUATION-AND-MODEL-GOVERNANCE-PLAN.md",
+      "sha256": "e49f536bcf83573db88c4475f5d47d7d13022c68d0ce1edcc25226e255df8a75",
+      "bytes": 3620,
+      "title": "EA-13 — Edge AI, RAG and Agent Evaluation Protocol",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/14-GOVERNANCE-OPERATING-MODEL-RACI.md",
+      "sha256": "89d5380bc130a39cfa593581ec3c65cac3380b83e6614c65fd9dc78c166d9b00",
+      "bytes": 3319,
+      "title": "EA-14 — Architecture Governance, Technical Leadership and Operating Model",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/15-PORTFOLIO-CASE-STUDY-AND-EVIDENCE.md",
+      "sha256": "e1f7a33bf9857599c04e586eb9fc890d6451bb71d0a73c5aff63dd4f5457d9c1",
+      "bytes": 4099,
+      "title": "EA-15 — Executive Architecture Case Study and Evidence Register",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/16-MASTER-ENTERPRISE-SOLUTION-ARCHITECTURE.md",
+      "sha256": "bb7fb333e856a92f35d6ddbff02de1b6053de609588edb383d6c4c7ce01f1833",
+      "bytes": 16540,
+      "title": "EA-16 — Master Enterprise Solution Architecture (EDGEOPS)",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/17-ARCHITECTURE-GAP-AUDIT-AND-REVIEW-REGISTER.md",
+      "sha256": "0b392780e42ec212c306b1d28908505cff42faa2fa24de2264c9aa7edfdfd569",
+      "bytes": 5751,
+      "title": "EA-17 — Enterprise Architecture Gap Audit and Review Register",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/18-ROLE-COMPETENCY-AND-INTERVIEW-EVIDENCE-MAP.md",
+      "sha256": "033c35a1df8bd7d82e52af7b2c27fbc1766bd1c7b92dfab4c6f167e2c6d20dbb",
+      "bytes": 3471,
+      "title": "EA-18 — EDGEOPS Role Competency and Interview Evidence Map",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/19-ARCHITECTURE-TO-CODE-CONFORMANCE-REVIEW.md",
+      "sha256": "91a2a564984890cb38b7d91c6a5211f18d308443c70ad86b211887fc6686872a",
+      "bytes": 7572,
+      "title": "EA-19 — Architecture-to-Code Conformance Review",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/20-TELEMETRY-CONTRACT-MIGRATION-AND-TEST-PLAN.md",
+      "sha256": "14d61e4a09f22007a61fbd8b9302ced1a70ad1d33758c4752351249f828b8963",
+      "bytes": 6798,
+      "title": "EA-20 — Serial V1 to Enterprise Telemetry V2 Migration and Verification Plan",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/21-IMPLEMENTATION-READINESS-ARCHITECTURE-REVIEW.md",
+      "sha256": "2cd4907581c43cc71e7cd6fc7b1a9ea29645cffe0544cfae1a2dfb80fe9b391c",
+      "bytes": 15269,
+      "title": "EA-21 — Implementation-Readiness Architecture Review and Decision Pack",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/22-INTERFACE-CONTROL-DOCUMENT.md",
+      "sha256": "c0e3e7636636dfc5d644dd81119efa5b33b36d6cbbbb91b82152ebc52f5c4cef",
+      "bytes": 11610,
+      "title": "EA-22 — EDGEOPS Interface Control Document (ICD)",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/24-ENTERPRISE-SECURITY-AND-ZERO-TRUST-VERIFICATION.md",
+      "sha256": "ec77b7e9522786d64778c454f5b94a4f430c9a6b09a71e87e5877d13cedd639a",
+      "bytes": 14990,
+      "title": "EA-24 — Enterprise Security Architecture & Zero-Trust Verification Plan",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/25-EXECUTABLE-ZERO-TRUST-POLICY-AND-TESTS.md",
+      "sha256": "21e8c6ed3abf1af57b561df0d35da3f040128d77c373704748be29d8ba6d6955",
+      "bytes": 7432,
+      "title": "EA-25 — Executable Zero-Trust Policy Contract and Offline Tests",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/26-ENTERPRISE-SECURITY-INTEGRATION-ARCHITECTURE.md",
+      "sha256": "611516543dc6e83e5679fe4c92de5905ccacbb6a10c81708d1798bca8a8f7a7a",
+      "bytes": 18264,
+      "title": "EA-26 — Enterprise Security Integration Architecture and Identity Handoff Design",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/27-SANDBOX-SECURITY-INTEGRATION-TEST-HARNESS.md",
+      "sha256": "65516e949fc3948496da0dc309e19619eb654c59a53fa1928bd8c378993ecde1",
+      "bytes": 7359,
+      "title": "EA-27 — In-Memory Sandbox Security Integration Harness",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/28-LOCAL-MQTT-AND-FASTAPI-SECURITY-SANDBOX.md",
+      "sha256": "53ad37958aaf5543d8256f780af17515a0a97ac48577e2356d7d100fed50e520",
+      "bytes": 11289,
+      "title": "EA-28 — Local MQTT mTLS and FastAPI Security Sandbox",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/29-MQTT-TO-FASTAPI-GATEWAY-INTEGRATION.md",
+      "sha256": "49d3040f6703984603b683dadca6732152d6f17dfb51078d1221e7a843a7e22a",
+      "bytes": 5868,
+      "title": "EA-29 — Local MQTT-to-FastAPI Gateway Integration Slice",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/30-INDEPENDENT-HTTP-API-AND-DURABLE-TELEMETRY.md",
+      "sha256": "518b95d43e3be83c76e9f7dd90d61551205eaf572a63c19fddf2dad9e43bbc62",
+      "bytes": 5086,
+      "title": "EA-30 - Independent localhost HTTP API and SQLite durable ingestion",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/31-REAL-MQTT-TO-DURABLE-HTTP-INTEGRATION.md",
+      "sha256": "e99d1b57f71e7d8e1316985a23c3e3ad4934b0fcc05213aad867aed36ec239cf",
+      "bytes": 6252,
+      "title": "EA-31 — Real MQTT-to-Independent HTTP and SQLite Integration",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "enterprise-architecture/README.md",
+      "sha256": "51a71b5d77e4383f27c0fe2739286b372ccdfa68990ad90ce0131baa9f11c2a1",
+      "bytes": 15757,
+      "title": "EDGEOPS — Enterprise Architecture Baseline",
+      "review_focus": "Architecture, contract, risk, policy or integration requirements"
+    },
+    {
+      "path": "HARDWARE_30_PRODUCT_REGISTER.md",
+      "sha256": "c11c10f86e2695fc0bcc62312b648cc478c8f1d71db708053fa0c94565c1379a",
+      "bytes": 4476,
+      "title": "Industrial Edge AI - 30 Hardware Product Register",
+      "review_focus": "BOM, procurement uncertainty, power/sensor integration and acceptance"
+    },
+    {
+      "path": "HARDWARE_BUYING_INTEGRATION_AND_CAREER_GUIDE.md",
+      "sha256": "3fe5041b1b07fdedbe70bc9e57bb602087539f776d7fadae00b6e11248053310",
+      "bytes": 10289,
+      "title": "Industrial Edge AI — Hardware Buying, Integration & Career Guide",
+      "review_focus": "BOM, procurement uncertainty, power/sensor integration and acceptance"
+    },
+    {
+      "path": "HARDWARE_REQUIREMENTS.md",
+      "sha256": "85340b9b98da27b0d76880be9242eb4eb09c2eba6a82e5b991b6c07a3f661ad5",
+      "bytes": 6535,
+      "title": "Hardware Requirements — Industrial Edge AI Predictive Maintenance Platform",
+      "review_focus": "BOM, procurement uncertainty, power/sensor integration and acceptance"
+    },
+    {
+      "path": "INDUSTRIAL_EDGE_AI_30_HARDWARE_END_TO_END_REPORT.md",
+      "sha256": "d19fc9582bffd80527bbd37fe8484396cc8b146f96bf87b620d05e3f45d16c31",
+      "bytes": 11771,
+      "title": "Industrial Edge AI — 30-Product End-to-End Hardware Report",
+      "review_focus": "BOM, procurement uncertainty, power/sensor integration and acceptance"
+    },
+    {
+      "path": "phase-01-hardware/docs/WIRING_AND_SAFETY.md",
+      "sha256": "af035721762853ec8199071a92ed9ee7d03f5b26ed1e7971870ac90bcff09cee",
+      "bytes": 1607,
+      "title": "Wiring and Safety — ESP32 Sensor-Only Test",
+      "review_focus": "Actual source/bring-up scope and physical signal constraints"
+    },
+    {
+      "path": "phase-01-hardware/README.md",
+      "sha256": "809621dd819907231c903e74bd43eeef4b62e061cacf235e67e5c3f43e1609f7",
+      "bytes": 2684,
+      "title": "Phase 01 — Runnable Sensor Acquisition Starter",
+      "review_focus": "Actual source/bring-up scope and physical signal constraints"
+    },
+    {
+      "path": "PHASE_01_HARDWARE_IMPLEMENTATION.md",
+      "sha256": "d9915f898d49c3ecfa692f0166916421b6084c5712da9951d508951c3065dd99",
+      "bytes": 9732,
+      "title": "Phase 01 — Practical Hardware Implementation: ESP32 Sensor Acquisition",
+      "review_focus": "Implementation requirements, dependencies, tests and evidence boundaries"
+    },
+    {
+      "path": "PHASE_02_EMBEDDED_IOT_MQTT_IMPLEMENTATION.md",
+      "sha256": "a84dc9e8bf1e29d80dc50809507f86571ce8a552eef66f58c8225115503e3542",
+      "bytes": 13812,
+      "title": "Phase 02 — Embedded IoT, MQTT and Reliable Edge Telemetry",
+      "review_focus": "Implementation requirements, dependencies, tests and evidence boundaries"
+    },
+    {
+      "path": "PHASE_03_EDGE_AI_ONNX_IMPLEMENTATION.md",
+      "sha256": "48996477cf03f8bcd45c5691fef82933904a55dcfe0e872d062d2e78581458c7",
+      "bytes": 17118,
+      "title": "Phase 03 — Edge AI Model Development, ONNX Deployment and Benchmarking",
+      "review_focus": "Implementation requirements, dependencies, tests and evidence boundaries"
+    },
+    {
+      "path": "PHASE_04_INDUSTRIAL_PREDICTIVE_MAINTENANCE_IMPLEMENTATION.md",
+      "sha256": "7e8160e6251ab2cbdc6b9d868e12ea1d614e2982000f7778a0191a516abe22d8",
+      "bytes": 18190,
+      "title": "Phase 04 — Industrial Predictive Maintenance and Human-Approved Maintenance Workflows",
+      "review_focus": "Implementation requirements, dependencies, tests and evidence boundaries"
+    },
+    {
+      "path": "PHASE_05_PRODUCTION_BACKEND_TIMESERIES_DASHBOARD.md",
+      "sha256": "efe22c5a214fbfc86d6d1bf497947525799242ac0b70e7db24c1d9af14fa3ab1",
+      "bytes": 18939,
+      "title": "Phase 05 — Production Backend, Time-Series Database & Real-Time Operations Dashboard",
+      "review_focus": "Implementation requirements, dependencies, tests and evidence boundaries"
+    },
+    {
+      "path": "PHASE_06_AGENTIC_AI_RAG_CONTROLLED_AUTOMATION.md",
+      "sha256": "d476574f489db99a988a1f32812d74315a00a71b1844ba824a866c3a68550e63",
+      "bytes": 17482,
+      "title": "Phase 06 — Agentic AI Maintenance Assistant, RAG Knowledge Base & Controlled Automation",
+      "review_focus": "Implementation requirements, dependencies, tests and evidence boundaries"
+    },
+    {
+      "path": "PHASE_07_DIGITAL_TWIN_FLEET_ANALYTICS_EVALUATION.md",
+      "sha256": "89af83bda400fe4b2224ca3717891b478f040481390377c7497698fb28e3f80d",
+      "bytes": 18618,
+      "title": "Phase 07 — Industrial Digital Twin, Fleet Analytics & Predictive Maintenance Evaluation",
+      "review_focus": "Implementation requirements, dependencies, tests and evidence boundaries"
+    },
+    {
+      "path": "PHASE_08_SECURITY_MLOPS_DEPLOYMENT_PORTFOLIO.md",
+      "sha256": "de216f3f8909f1f3624a48cd92947bd936a57b60d564e156519eed37f724a0e2",
+      "bytes": 17472,
+      "title": "Phase 08 — Security Hardening, MLOps, Production Deployment & Professional Portfolio Demonstration",
+      "review_focus": "Implementation requirements, dependencies, tests and evidence boundaries"
+    },
+    {
+      "path": "README.md",
+      "sha256": "5ea840181752076b6c7a7c236688a8df8bdf5b920c98d7f4d4e02a63f1a06ad6",
+      "bytes": 21030,
+      "title": "EDGEOPS — Industrial Edge AI Predictive Maintenance & Autonomous Operations",
+      "review_focus": "Product scope, source map and proposed end-to-end architecture"
+    }
+  ],
+  "recorded_evidence": [
+    {
+      "path": "enterprise-architecture/evidence/EA-28/api-tests.txt",
+      "sha256": "247cde14e72d6e246159bb74fc90866323bb37060c85d4388d5fc9b97ea17bb0",
+      "recorded_tests": 14,
+      "recorded_outcome": "OK",
+      "execution_in_this_design_task": false
+    },
+    {
+      "path": "enterprise-architecture/evidence/EA-28/broker-tests.txt",
+      "sha256": "2493400a8da97b8e167ad26fb73c9d2d46877d2c49e211868746fb6303a09a34",
+      "recorded_tests": 3,
+      "recorded_outcome": "OK",
+      "execution_in_this_design_task": false
+    },
+    {
+      "path": "enterprise-architecture/evidence/EA-29/gateway-tests.txt",
+      "sha256": "31df9f5e2fb8e5cec1ba147bfe9900accb324d614706ee7ec772b7b12e746adb",
+      "recorded_tests": 12,
+      "recorded_outcome": "OK",
+      "execution_in_this_design_task": false
+    },
+    {
+      "path": "enterprise-architecture/evidence/EA-30/http-tests.txt",
+      "sha256": "8c5c7afc07cd9326909bdc035c561f01e919d5235c5c56248c7ddeb47eb4960c",
+      "recorded_tests": 15,
+      "recorded_outcome": "OK",
+      "execution_in_this_design_task": false
+    },
+    {
+      "path": "enterprise-architecture/evidence/EA-31/integration-tests.txt",
+      "sha256": "bc0fdf17d65131a03394f662955fe34f5d95233155af3a6d63fbd699ce2a4092",
+      "recorded_tests": 12,
+      "recorded_outcome": "OK",
+      "execution_in_this_design_task": false
+    },
+    {
+      "path": "enterprise-architecture/evidence/EA-23/test-results.txt",
+      "sha256": "c7d6fc6ae29d3f8c80844d6fd191c218f2e5d0dfbd9720f18d02712e60ae7393",
+      "recorded_tests": 18,
+      "recorded_outcome": "OK",
+      "execution_in_this_design_task": false
+    },
+    {
+      "path": "enterprise-architecture/evidence/EA-25/test-results.txt",
+      "sha256": "b4daa3e206e1981b2d647d6d04870168221d7b477e58df3b597175cdecb79127",
+      "recorded_tests": 34,
+      "recorded_outcome": "OK",
+      "execution_in_this_design_task": false
+    },
+    {
+      "path": "enterprise-architecture/evidence/EA-27/test-results.txt",
+      "sha256": "69d3038e82331e2fb34a56e1ee02bc2beded07cdba8027cd039e515194293197",
+      "recorded_tests": 24,
+      "recorded_outcome": "OK",
+      "execution_in_this_design_task": false
+    }
+  ],
+  "key_source_contracts": [
+    {
+      "path": "phase-01-hardware/firmware/src/main.cpp",
+      "sha256": "098a9f8690493c38fd5219e968a5cd65b098b6ed8e92451d86e7b39cd2f3692b",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "phase-01-hardware/firmware/platformio.ini",
+      "sha256": "78c822f55aab426b60dd4a128f6567fff567d2f0690e28a91dc3b2681894c743",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "phase-01-hardware/scripts/capture_serial.py",
+      "sha256": "e39d234095e9a3f5ce3aacb4ee0e353b5e93db781f3fc3231d0fe789c16591d2",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "enterprise-architecture/contracts/telemetry-v2.schema.json",
+      "sha256": "918662ebd1ed2ff49c0aa38f141c5296f024be5fd04d1ae01058a7cde6bfc7e2",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "enterprise-architecture/security/policy/edgeops-zero-trust.v1.json",
+      "sha256": "98c705932371b8fe7343c65bff99ce48320fc078da22ffaede953440e17f51c3",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "enterprise-architecture/security/live-sandbox/durable_service.py",
+      "sha256": "a8797cb3841ed08c2e3760867dc06fa985f9eef307a5968965f6124a8c96e5e8",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "enterprise-architecture/security/live-sandbox/mqtt_http_bridge.py",
+      "sha256": "6752a4ec51b9bc98dd3308a47f81c8ab557a3d86563918c711b094914f3d0c1e",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/server.py",
+      "sha256": "80c7265e044282fbc703d80d8a73b88b22c61fb6a8fe45b3a0ba5a41449e8a13",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/telemetry_store.py",
+      "sha256": "0bc9aebe14fa68357de101e9968f644a9e6c587e31ffa01d3a9aa5020059b5d5",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/time_series_features.py",
+      "sha256": "ca1e0a7ca8d3acdc8ff7c0f5fc8c7085a6832ef75f661f2e861b4be3e65171be",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/offline_baseline.py",
+      "sha256": "452e85f926bc62c2b4fdac38910ebf0e200f9909a99f8f50f882894546759b10",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/sklearn_comparison.py",
+      "sha256": "85a26ff56690417763e1c92ed0e8cfa86843452c57394a50753d98b7d9e5e99e",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/comparison_registry.py",
+      "sha256": "288403e1d64e54cf4276524590ccf3dc886ce909421c8ec225427391a39d6f42",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/experiment_registry.py",
+      "sha256": "d848cdfffc8eae93c3df1305e23a3e0bfc66f6ade347c3aeff5634f20cbafb68",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/app.js",
+      "sha256": "d2002d44d1746846fea21910c58e9c9c4af39606f84af717d0a7cfc3fc8d61bd",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    },
+    {
+      "path": "dashboard/workspace.js",
+      "sha256": "40c5b43a34a4351730841fb4c6e985fb8522ae73346d378dd0c706b1bd8de22b",
+      "review": "Static behavior and design compatibility; not a production execution claim"
+    }
+  ],
+  "historical_html_references": [
+    {
+      "path": "assets/EDGEOPS_Complete_Clickable_Visual_Dashboard_v4.html",
+      "sha256": "0c525c1dc0fe4fa7c8d7de09ff5da51e8bb79afc95559c1fbb99e56b3346e948",
+      "review": "Historical visual prototype text/navigation; not authenticated operational evidence"
+    },
+    {
+      "path": "assets/EDGEOPS_Industrial_AI_Dashboard_With_SignIn (1).html",
+      "sha256": "72e5a9ad9f19b501f053156288d4f6fd221176933aeab126bf711d2d2d84a8a4",
+      "review": "Historical visual prototype text/navigation; not authenticated operational evidence"
+    },
+    {
+      "path": "assets/EDGEOPS_Industrial_AI_Dashboard_With_SignIn.html",
+      "sha256": "72e5a9ad9f19b501f053156288d4f6fd221176933aeab126bf711d2d2d84a8a4",
+      "review": "Historical visual prototype text/navigation; not authenticated operational evidence"
+    },
+    {
+      "path": "assets/EDGEOPS_Industrial_AI_Interactive_Dashboard.html",
+      "sha256": "f09082fa6d2f3d2d3d5fd9c9cff305d85b345c82e274e597d7f6284b6809ba68",
+      "review": "Historical visual prototype text/navigation; not authenticated operational evidence"
+    },
+    {
+      "path": "assets/EDGEOPS_Industrial_AI_Premium_Experience_v3.html",
+      "sha256": "ee663e48790e6407573db781588c3ecd1900afd33e6d344c765d003fa2ab5a99",
+      "review": "Historical visual prototype text/navigation; not authenticated operational evidence"
+    },
+    {
+      "path": "assets/EDGEOPS_Industrial_AI_Visual_Experience.html",
+      "sha256": "e61d9767b6b921a2251ab4e6ecc7996758c2e7804d5e749386c302266ec48f8f",
+      "review": "Historical visual prototype text/navigation; not authenticated operational evidence"
+    },
+    {
+      "path": "assets/EDGEOPS_Reference_Matched_Complete_Clickable_Dashboard.html",
+      "sha256": "2a24bb4db5933a468eadd5b5ac3ba4627b4b2b7ae822d61c238bb78a25c94eb3",
+      "review": "Historical visual prototype text/navigation; not authenticated operational evidence"
+    }
+  ],
+  "archived_reference_guide": {
+    "archive": "assets/EDGEOPS_Exact_Reference_Clickable_HTML_and_PDF.zip",
+    "member": "EDGEOPS/EDGEOPS_Clickable_Reference_Guide.pdf",
+    "pages": 15,
+    "review": "Extracted navigation/screen titles; historical image-backed reference, not engineering or production acceptance"
+  }
+}
